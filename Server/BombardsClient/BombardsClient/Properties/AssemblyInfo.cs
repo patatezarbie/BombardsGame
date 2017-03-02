@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de 
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("BombardsServer")]
+[assembly: AssemblyTitle("BombardsClient")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BombardsServer")]
+[assembly: AssemblyProduct("BombardsClient")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
-[assembly: Guid("77682a81-7921-44d7-ae44-71337372dfc8")]
+[assembly: Guid("5aa3338c-7fba-478d-b4aa-fb0f3c9c6d6d")]
 
 // Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 //

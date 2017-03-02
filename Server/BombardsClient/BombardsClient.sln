@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BombardsServer", "BombardsServer\BombardsServer.csproj", "{260BA176-D51A-4C8D-84F8-1EC6F562E328}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BombardsClient", "BombardsClient\BombardsClient.csproj", "{2DD06623-E6AF-452B-9780-5C0BB73B0106}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{260BA176-D51A-4C8D-84F8-1EC6F562E328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{260BA176-D51A-4C8D-84F8-1EC6F562E328}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{260BA176-D51A-4C8D-84F8-1EC6F562E328}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{260BA176-D51A-4C8D-84F8-1EC6F562E328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DD06623-E6AF-452B-9780-5C0BB73B0106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DD06623-E6AF-452B-9780-5C0BB73B0106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DD06623-E6AF-452B-9780-5C0BB73B0106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DD06623-E6AF-452B-9780-5C0BB73B0106}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
