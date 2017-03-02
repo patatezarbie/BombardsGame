@@ -16,8 +16,8 @@ namespace NetworkBombards_Player
 
         #region Fields
         private BG_Cannon _cannon;
+        // Represent an history an all the player touched as Hit object
         private List<BG_Hit> _history;
-        private int _score;
         private string _name;
         private bool _isPlaying;
         //private bool _isDead;
@@ -32,8 +32,7 @@ namespace NetworkBombards_Player
 
         public int Score
         {
-            get { return _score; }
-            set { _score = value; }
+            get { return this.History.Count; }
         }
 
         public string Name
@@ -71,7 +70,6 @@ namespace NetworkBombards_Player
             //this.Cannon = new BG_Cannon();
             this.History = new List<BG_Hit>();
             this.Name = name;
-            this.Score = this.History.Count;
             this.IsPlaying = false;
         }
 
@@ -88,7 +86,8 @@ namespace NetworkBombards_Player
         /// </summary>
         public void shoot()
         {
-            this._cannon.Shoot();
+            if (IsPlaying)
+                this._cannon.Shoot();
         }
 
         /// <summary>
@@ -98,7 +97,7 @@ namespace NetworkBombards_Player
         {
             //this.IsDead = false;
             this.IsPlaying = false;
-            this.Score = 0;
+            this.History.Clear();
         }
 
         /// <summary>
@@ -120,10 +119,18 @@ namespace NetworkBombards_Player
         /// <summary>
         /// At each tick we send info about the player and canon to the server/game master
         /// </summary>
-        public void Update() {
-
-            this.Score = this.History.Count;
+        public void Update()
+        {
             // Waiting for Server/Client codes...
+        }
+
+        /// <summary>
+        /// Add an element in the history
+        /// </summary>
+        /// <param name="hit"></param>
+        public void AddHistory(BG_Hit hit)
+        {
+            this.History.Add(hit);
         }
         #endregion
     }
