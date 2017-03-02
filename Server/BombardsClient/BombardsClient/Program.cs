@@ -14,9 +14,12 @@ namespace BombardsClient
             Console.Write("Enter a name to use: ");
             string name = Console.ReadLine();
 
-            // Setup the Messenger
-            string host = "127.0.0.1";//args[0].Trim();
-            int port = 8000;//int.Parse(args[1].Trim());
+            // Get the ip
+            Console.Write("Enter an ip address to connect to: ");
+            string host = Console.ReadLine();
+
+            // Set up the port and create the player
+            int port = 8000;
             Player user = new Player(host, port, name);
 
             // connect and send messages
