@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -149,10 +150,56 @@ namespace BombardsClient
             }
         }
 
+        // See if the server
+        public void CheckForNewMessages()
+        {
+            bool wasRunning = Running;
+
+            // Listen for messages
+            while (Running)
+            {
+                // Do we have a new message?
+                int messageLength = this.Client.Available;
+                if (messageLength > 0)
+                {
+                    // Read the whole message
+                    byte[] msgBuffer = new byte[messageLength];
+                    this.MsgStream.Read(msgBuffer, 0, messageLength);   // Blocks
+
+                    string msg = Encoding.UTF8.GetString(msgBuffer);
+
+                    // Check that we don't recieve our own messages
+                    string nameFromMsg = msg.Split(':')[0];
+
+                    if (nameFromMsg != this.Name)
+                    {
+                        Console.WriteLine(Environment.NewLine + msg);
+                    }                    
+                }
+
+                // Use less CPU
+                Thread.Sleep(10);
+
+                // Check that we are still connected to the server
+                if (this.IsDisconnected(this.Client))
+                {
+                    Running = false;
+                    Console.WriteLine("Server has disconnected from us.\n:[");
+                }
+            }
+
+            // Cleanup
+            this.CleanupNetworkResources();
+            if (wasRunning)
+            {
+                Console.WriteLine("Disconnected.");
+            }
+        }
+
         // Cleans any leftover network resources
         private void CleanupNetworkResources()
         {
-            this.MsgStream?.Close();
+            this.MsgStream.Close();
             this.MsgStream = null;
             this.Client.Close();
         }

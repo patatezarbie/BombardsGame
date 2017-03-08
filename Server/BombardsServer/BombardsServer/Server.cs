@@ -196,7 +196,8 @@ namespace BombardsServer
                 foreach (TcpClient client in this.Clients) {
                     client.GetStream().Write(msgBuffer, 0, msgBuffer.Length);
                 }
-                    
+
+                Console.WriteLine(message);
             }
 
             // clear out the queue

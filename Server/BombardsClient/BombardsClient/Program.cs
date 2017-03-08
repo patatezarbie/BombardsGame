@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BombardsClient
@@ -24,6 +25,12 @@ namespace BombardsClient
 
             // connect and send messages
             user.Connect();
+
+            // Permanantly check for new messages
+            Thread thread = new Thread(new ThreadStart(user.CheckForNewMessages));
+            thread.Start();
+
+            // Main loop
             user.SendMessages();
         }
     }
