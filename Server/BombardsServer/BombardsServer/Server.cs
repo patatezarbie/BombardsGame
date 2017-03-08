@@ -155,8 +155,8 @@ namespace BombardsServer
                     string name = _names[client];
 
                     // Tell the viewers someone has left
-                    Console.WriteLine("Player {0} has left.", name);
-                    this.MessageQueue.Enqueue(String.Format("{0} has left the game", name));
+                    Console.WriteLine(Environment.NewLine, "Player {0} has left.", name);
+                    this.MessageQueue.Enqueue(String.Format("{0}{1} has left the game", Environment.NewLine, name));
 
                     this.Clients.Remove(client);  // Remove from list
                     this.Names.Remove(client);    // Remove taken name
@@ -231,7 +231,7 @@ namespace BombardsServer
 
             // Print some info
             EndPoint endPoint = newClient.Client.RemoteEndPoint;
-            Console.WriteLine("Handling a new client from {0}...", endPoint);
+            Console.WriteLine("{0}Handling a new client from {1}...", Environment.NewLine, endPoint);
 
             // Let them identify themselves
             byte[] msgBuffer = new byte[BufferSize];
@@ -248,15 +248,16 @@ namespace BombardsServer
 
                     if ((name != string.Empty) && (!_names.ContainsValue(name)))
                     {
-                        // They're new here, add them in
+                        // Add the player
                         clientIsAccepted = true;
                         this.Names.Add(newClient, name);
                         this.Clients.Add(newClient);
 
+                        // Show ip and name
                         Console.WriteLine("{0} is a player with the name {1}.", endPoint, name);
 
-                        // Tell the viewers we have a new messenger
-                        this.MessageQueue.Enqueue(String.Format("{0} has joined the game.", name));
+                        // Tell the current players we have a new player
+                        this.MessageQueue.Enqueue(String.Format("{0}{1} has joined the game.", Environment.NewLine, name));
                     }
                 }
                 else

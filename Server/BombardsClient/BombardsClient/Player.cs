@@ -108,6 +108,9 @@ namespace BombardsClient
             }
         }
 
+        /// <summary>
+        /// "Chat mode" poll the user for a message and send it
+        /// </summary>
         public void SendMessages()
         {
             bool wasRunning = this.Running;
@@ -143,10 +146,45 @@ namespace BombardsClient
                 }
             }
 
-            this.CleanupNetworkResources();
             if (wasRunning)
             {
+                this.CleanupNetworkResources();
                 Console.WriteLine("Disconnected.");
+            }
+        }
+
+
+        /// <summary>
+        /// Send a single message passed as parameter
+        /// </summary>
+        /// <param name="msg"></param>
+        public void SendMessages(string msg)
+        {
+            bool wasRunning = this.Running;
+
+            // Quit or send a message
+            if ((msg.ToLower() == "quit") || (msg.ToLower() == "exit"))
+            {
+                // User wants to quit
+                Console.WriteLine("Disconnecting...");
+                this.Running = false;
+            }
+            else if (msg != string.Empty)
+            {
+                // Send the message
+                byte[] msgBuffer = Encoding.UTF8.GetBytes(msg);
+                this.MsgStream.Write(msgBuffer, 0, msgBuffer.Length);
+            }
+
+            // Use less CPU
+            Thread.Sleep(20);
+
+            // Check that we are still connected to the server
+            if (this.IsDisconnected(this.Client))
+            {
+                Running = false;
+                this.CleanupNetworkResources();
+                Console.WriteLine("Server has disconnected from us.\n:[");
             }
         }
 
@@ -174,7 +212,7 @@ namespace BombardsClient
                     if (nameFromMsg != this.Name)
                     {
                         Console.WriteLine(Environment.NewLine + msg);
-                    }                    
+                    }
                 }
 
                 // Use less CPU
@@ -184,15 +222,9 @@ namespace BombardsClient
                 if (this.IsDisconnected(this.Client))
                 {
                     Running = false;
+                    this.CleanupNetworkResources();
                     Console.WriteLine("Server has disconnected from us.\n:[");
                 }
-            }
-
-            // Cleanup
-            this.CleanupNetworkResources();
-            if (wasRunning)
-            {
-                Console.WriteLine("Disconnected.");
             }
         }
 
