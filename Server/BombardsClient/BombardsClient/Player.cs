@@ -93,7 +93,10 @@ namespace BombardsClient
 
                 // If we're still connected after sending our name, that means the server accepts us
                 if (!this.IsDisconnected(this.Client))
+                {
                     this.Running = true;
+                    Thread.Sleep(20);
+                }
                 else
                 {
                     // Name was probably taken...

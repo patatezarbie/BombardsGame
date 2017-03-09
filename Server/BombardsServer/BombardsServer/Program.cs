@@ -19,7 +19,7 @@ namespace BombardsServer
         public static void Main(string[] args)
         {
             // Create the server
-            string name = "Bombard's CFPT";
+            string name = "Bombards CFPT";
             int port = 8000;
             bombardsRoom = new Server(name, port);
 

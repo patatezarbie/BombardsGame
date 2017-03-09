@@ -222,7 +222,7 @@ namespace BombardsServer
         private void HandleNewConnection()
         {
             bool clientIsAccepted = false;
-            TcpClient newClient = _listener.AcceptTcpClient();
+            TcpClient newClient = this.Listener.AcceptTcpClient();
             NetworkStream netStream = newClient.GetStream();
 
             // Modify the default buffer sizes
