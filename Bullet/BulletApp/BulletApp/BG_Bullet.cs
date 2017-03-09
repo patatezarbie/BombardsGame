@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -32,7 +33,8 @@ namespace BulletApp
         private int _velocity;
         private Stopwatch _stp;
         double _gravity;
-        
+
+        public int Test = 0;
         
         #endregion
 
@@ -47,6 +49,7 @@ namespace BulletApp
             _stp = new Stopwatch();
             _stp.Start();
             this._dx = 0;
+            Destination();           
         }
         #endregion
 
@@ -54,7 +57,6 @@ namespace BulletApp
 
         public void Draw(PaintEventArgs e)
         {
-
             if (_stp.ElapsedMilliseconds >= 1)
             {
                 _dx++;
@@ -65,7 +67,6 @@ namespace BulletApp
             //              Y0            +                dx  *      tan(angle)  - (    g    *          dx * dx  ) / (2 *         (                     v      *    cos(angle)) carré)   
             _y = _yInit - Convert.ToInt32(Convert.ToDouble(0) + _dx * Math.Tan(_angle) - ((_gravity * Math.Pow(_dx, 2)) / (2d * Math.Pow(Convert.ToDouble(_velocity) * Math.Cos(_angle), 2))));
              
-
             // draw bullet
             e.Graphics.FillEllipse(Brushes.Red, _x + Convert.ToInt32(_dx), _y, RADIUS, RADIUS);
             e.Graphics.DrawEllipse(Pens.Black, _x + Convert.ToInt32(_dx), _y, RADIUS, RADIUS);
