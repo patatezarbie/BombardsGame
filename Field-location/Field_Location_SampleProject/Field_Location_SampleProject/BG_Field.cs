@@ -95,7 +95,7 @@ namespace Field_Location_SampleProject
                 }
             }
 
-            // Number of repetitions of the midpoint displacement algorithm on each segment, each run, the number of points is doubled
+            // Number of repetions of the midpoint displacement algorithm on each segment, each run, the number of points is doubled
             for (int j = 0; j < SMOOTHNESS; j++)
             {
                 // Start for last point and finishes at first point (right side of the screen to the left)
