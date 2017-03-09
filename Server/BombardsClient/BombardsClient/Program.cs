@@ -21,7 +21,7 @@ namespace BombardsClient
 
             // Set up the port and create the player
             int port = 8000;
-            Player user = new Player(host, port, name);
+            BG_Client user = new BG_Client(host, port, name);
 
             // connect and send messages
             user.Connect();

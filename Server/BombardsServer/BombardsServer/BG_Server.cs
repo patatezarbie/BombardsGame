@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BombardsServer
 {
-    public class Server
+    public class BG_Server
     {
         #region fields
         // What listens in
@@ -87,7 +87,7 @@ namespace BombardsServer
         #endregion
 
         #region constructors
-        public Server(string roomName, int port)
+        public BG_Server(string roomName, int port)
         {
             // Set the room info
             this.RoomName = roomName;
@@ -152,7 +152,7 @@ namespace BombardsServer
                 if (this.IsDisconnected(client))
                 {
                     // Get info about the messenger
-                    string name = _names[client];
+                    string name = this.Names[client];
 
                     // Tell the viewers someone has left
                     Console.WriteLine(Environment.NewLine, "Player {0} has left.", name);

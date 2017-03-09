@@ -8,7 +8,7 @@ namespace BombardsServer
 {
     class Program
     {
-        public static Server bombardsRoom;
+        public static BG_Server bombardsRoom;
 
         protected static void InterruptHandler(object sender, ConsoleCancelEventArgs args)
         {
@@ -21,7 +21,7 @@ namespace BombardsServer
             // Create the server
             string name = "Bombards CFPT";
             int port = 8000;
-            bombardsRoom = new Server(name, port);
+            bombardsRoom = new BG_Server(name, port);
 
             // Add a handler for a Ctrl-C press
             Console.CancelKeyPress += InterruptHandler;

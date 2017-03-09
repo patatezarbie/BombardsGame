@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BombardsClient
 {
-    class Player
+    class BG_Client
     {
         #region fields
         // Connection objects
@@ -57,7 +57,7 @@ namespace BombardsClient
         #endregion
 
         #region constructors
-        public Player(string serverAddress, int port, string name)
+        public BG_Client(string serverAddress, int port, string name)
         {
             // Create a non-connected TcpClient
             this.Client = new TcpClient();
