@@ -32,7 +32,7 @@ namespace BulletApp
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
-            bullets.Add(new BG_Bullet(150, 300, 45, 50));
+            bullets.Add(new BG_Bullet(150, 300, (int)nudAngle.Value, 40));
         }
 
         private void timer1_Tick(object sender, EventArgs e)

@@ -31,8 +31,7 @@ namespace BulletApp
       
         private int _angle;
         private int _velocity;
-        private Stopwatch _stp;
-        double _gravity;
+        private Stopwatch _stp; 
 
         public int Test = 0;
         
@@ -44,8 +43,7 @@ namespace BulletApp
             this._x = this._xInit = x;
             this._y = this._yInit = y;
             this._angle = angle;
-            this._velocity = velocity;
-            this._gravity = 9.81;
+            this._velocity = velocity;            
             _stp = new Stopwatch();
             _stp.Start();
             this._dx = 0;
@@ -62,10 +60,12 @@ namespace BulletApp
                 _dx++;
                 _stp.Restart();
             }
-            
+
+            double angle_rad = _angle * Math.PI / 180;
+
             // https://fr.wikipedia.org/wiki/Trajectoire_d'un_projectile
             //              Y0            +                dx  *      tan(angle)  - (    g    *          dx * dx  ) / (2 *         (                     v      *    cos(angle)) carré)   
-            _y = _yInit - Convert.ToInt32(Convert.ToDouble(0) + _dx * Math.Tan(_angle) - ((_gravity * Math.Pow(_dx, 2)) / (2d * Math.Pow(Convert.ToDouble(_velocity) * Math.Cos(_angle), 2))));
+            _y = _yInit - Convert.ToInt32(Convert.ToDouble(0) + _dx * Math.Tan(angle_rad) - ((GRAVITY * Math.Pow(_dx, 2)) / (2d * Math.Pow(Convert.ToDouble(_velocity) * Math.Cos(angle_rad), 2))));
              
             // draw bullet
             e.Graphics.FillEllipse(Brushes.Red, _x + Convert.ToInt32(_dx), _y, RADIUS, RADIUS);
