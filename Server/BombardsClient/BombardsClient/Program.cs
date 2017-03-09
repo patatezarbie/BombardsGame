@@ -31,8 +31,8 @@ namespace BombardsClient
             thread.Start();
 
             // Main loop
-            //user.SendMessages("Hello world !");
-            user.SendMessages("Salut les copains !");
+            Thread.Sleep(7000);
+            user.SendMessages(user.Name + ";" + "endturn");
             Console.ReadLine();
         }
     }
