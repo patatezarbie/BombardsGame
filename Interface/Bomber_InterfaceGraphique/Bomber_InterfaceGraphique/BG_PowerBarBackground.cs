@@ -23,6 +23,14 @@ namespace Bomber_InterfaceGraphique
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Create new PowerBarBackground
+        /// </summary>
+        /// <param name="pX">X position</param>
+        /// <param name="pY">Y position</param>
+        /// <param name="pHeight">Height</param>
+        /// <param name="pWidth">Width</param>
+        /// <param name="pColor">Color</param>
         public BG_PowerBarBackground(float pX, float pY, float pHeight, float pWidth, Color pColor)
         {
             this.Height = pHeight;
@@ -33,18 +41,33 @@ namespace Bomber_InterfaceGraphique
             this.Brush = new SolidBrush(pColor);
         }
 
+        /// <summary>
+        /// Create new PowerBarBackground
+        /// </summary>
+        /// <param name="pX">X position</param>
+        /// <param name="pY">Y position</param>
+        /// <param name="pHeight">Height</param>
+        /// <param name="pWidth">Width</param>
         public BG_PowerBarBackground(float pX, float pY, float pHeight, float pWidth)
             : this(pX, pY, pHeight, pWidth, DEFAULT_COLOR)
         {
 
         }
 
+        /// <summary>
+        /// Create new PowerBarBackground
+        /// </summary>
+        /// <param name="pX">X position</param>
+        /// <param name="pY">Y position</param>
         public BG_PowerBarBackground(float pX, float pY)
             : this(pX, pY, DEFAULT_HEIGHT, DEFAULT_WIDTH)
         {
 
         }
 
+        /// <summary>
+        /// Create new PowerBarBackground
+        /// </summary>
         public BG_PowerBarBackground()
             : this(DEFAULT_X, DEFAULT_Y)
         {
@@ -53,6 +76,10 @@ namespace Bomber_InterfaceGraphique
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Draw elements
+        /// </summary>
+        /// <param name="pe"></param>
         public void Draw(PaintEventArgs pe)
         {
             pe.Graphics.DrawRectangle(this.Pen, this.X, this.Y, this.Width, this.Height);

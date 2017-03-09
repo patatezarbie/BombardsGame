@@ -1,26 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Bomber_InterfaceGraphique
 {
     public partial class FrmView : Form
     {
+<<<<<<< HEAD
         List<Player> playerlist = new List<Player>();
         Graphics g;
+=======
         BG_PowerBar bgBar;
         Timer test;
+>>>>>>> Création de la barre de puissance
 
         public FrmView()
         {
-            this.DoubleBuffered = true;
             InitializeComponent();
+<<<<<<< HEAD
             playerlist.Add(new Player("paul"));
             playerlist.Add(new Player("wdwdw"));
             playerlist.Add(new Player("ghhhhh"));
 
             rtb_score.WriteScore(playerlist);
+=======
             bgBar = new BG_PowerBar(200, this.Height - 100);
             
             this.test = new Timer();
@@ -32,6 +41,7 @@ namespace Bomber_InterfaceGraphique
         void test_Tick(object sender, EventArgs e)
         {
             this.Refresh();
+>>>>>>> Création de la barre de puissance
         }
 
         // Show the debug form
@@ -58,13 +68,12 @@ namespace Bomber_InterfaceGraphique
 
         private void FrmView_Paint(object sender, PaintEventArgs e)
         {
+<<<<<<< HEAD
             // Get the graphics
             g = e.Graphics;
 
             // Draw the status
             DrawConnectionStatus(g, true);
-
-            this.bgBar.Draw(e);
         }
 
         /// <summary>
@@ -101,6 +110,14 @@ namespace Bomber_InterfaceGraphique
                 rejoindrePartieToolStripMenuItem.Enabled = false;
                 quitterPartieToolStripMenuItem.Enabled = true;
             }
+=======
+            this.bgBar.Draw(e);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.bgBar.StartStopProgress();
+>>>>>>> Création de la barre de puissance
         }
     }
 }

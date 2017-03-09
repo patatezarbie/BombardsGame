@@ -21,6 +21,10 @@ namespace Bomber_InterfaceGraphique
         public BG_PowerBarBackground Background { get; set; }
         public BG_PowerBarProgress Progress { get; set; }
         public Timer TimePorgress { get; set; }
+        
+        /// <summary>
+        /// Get or set if the progress bar change the value
+        /// </summary>
         private bool IsStarted
         {
             get
@@ -29,7 +33,7 @@ namespace Bomber_InterfaceGraphique
             }
             set
             {
-                if (value)
+                if (value) // Enable or disable the timer
                     this.TimePorgress.Start();
                 else
                     this.TimePorgress.Stop();
@@ -38,6 +42,9 @@ namespace Bomber_InterfaceGraphique
             }
         }
 
+        /// <summary>
+        /// Get the normalized power
+        /// </summary>
         public float NormalizedPower
         {
             get
@@ -48,6 +55,13 @@ namespace Bomber_InterfaceGraphique
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Create new Powerbar
+        /// </summary>
+        /// <param name="pX">X position</param>
+        /// <param name="pY">Y position</param>
+        /// <param name="pWidth">Width</param>
+        /// <param name="pHeight">Height</param>
         public BG_PowerBar(float pX, float pY, float pWidth, float pHeight)
         {
             this.Background = new BG_PowerBarBackground(pX, pY, pHeight, pWidth);
@@ -62,6 +76,11 @@ namespace Bomber_InterfaceGraphique
             this.IsVisible = DEFAULT_VISIBLE;
         }
 
+        /// <summary>
+        /// Create new Powerbar
+        /// </summary>
+        /// <param name="pX">X position</param>
+        /// <param name="pY">Y position</param>
         public BG_PowerBar(float pX, float pY)
             : this(pX, pY, DEFAULT_WIDTH, DEFAULT_HEIGHT)
         {
@@ -70,18 +89,30 @@ namespace Bomber_InterfaceGraphique
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Event to each timer tick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimePorgress_Tick(object sender, System.EventArgs e)
         {
             if (this.IsVisible)
-                this.Progress.Value++;
+                this.Progress.Value++; // Increment the value
         }
 
+        /// <summary>
+        /// Enable or disable the progress event
+        /// </summary>
         public void StartStopProgress()
         {
             if (this.IsVisible)
                 this.IsStarted = !this.IsStarted;
         }
 
+        /// <summary>
+        /// Draw element
+        /// </summary>
+        /// <param name="pe"></param>
         public void Draw(PaintEventArgs pe)
         {
             if (this.IsVisible)
