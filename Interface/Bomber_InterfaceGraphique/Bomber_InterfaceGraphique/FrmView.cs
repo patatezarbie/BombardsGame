@@ -14,6 +14,8 @@ namespace Bomber_InterfaceGraphique
     {
         List<Player> playerlist = new List<Player>();
         Graphics g;
+        BG_PowerBar bgBar;
+        Timer test;
 
         public FrmView()
         {
@@ -23,6 +25,17 @@ namespace Bomber_InterfaceGraphique
             playerlist.Add(new Player("ghhhhh"));
 
             rtb_score.WriteScore(playerlist);
+            bgBar = new BG_PowerBar(200, this.Height - 100);
+            
+            this.test = new Timer();
+            this.test.Interval = 1;
+            this.test.Tick += test_Tick;
+            this.test.Start();
+        }
+
+        void test_Tick(object sender, EventArgs e)
+        {
+            this.Refresh();
         }
 
         // Show the debug form
@@ -90,6 +103,16 @@ namespace Bomber_InterfaceGraphique
                 rejoindrePartieToolStripMenuItem.Enabled = false;
                 quitterPartieToolStripMenuItem.Enabled = true;
             }
+        }
+
+        private void FrmView_Paint(object sender, PaintEventArgs e)
+        {
+            this.bgBar.Draw(e);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.bgBar.StartStopProgress();
         }
     }
 }

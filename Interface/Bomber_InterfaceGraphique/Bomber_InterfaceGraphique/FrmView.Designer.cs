@@ -38,6 +38,7 @@
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.rtb_score = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.ms_Menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -108,6 +109,7 @@
             this.pictureBox1.TabStop = false;
             // 
             // rtb_score
+            // button1
             // 
             this.rtb_score.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtb_score.Location = new System.Drawing.Point(708, 27);
@@ -116,6 +118,13 @@
             this.rtb_score.Size = new System.Drawing.Size(300, 461);
             this.rtb_score.TabIndex = 3;
             this.rtb_score.Text = "";
+            this.button1.Location = new System.Drawing.Point(627, 563);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // FrmView
             // 
@@ -123,6 +132,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 642);
             this.Controls.Add(this.rtb_score);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.ms_Menu);
             this.DoubleBuffered = true;
@@ -151,6 +161,7 @@
         private System.Windows.Forms.ToolStripMenuItem quitterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.RichTextBox rtb_score;
+        private System.Windows.Forms.Button button1;
     }
 }
 
