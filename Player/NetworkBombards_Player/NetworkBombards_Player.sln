@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkBombards_Player", "NetworkBombards_Player\NetworkBombards_Player.csproj", "{3D7A7267-2F11-4231-9509-DD54DCE60D56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkBombards_PlayerTests", "NetworkBombards_PlayerTests\NetworkBombards_PlayerTests.csproj", "{EFF1EB4F-0915-428C-82C7-49260E1FC646}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3D7A7267-2F11-4231-9509-DD54DCE60D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D7A7267-2F11-4231-9509-DD54DCE60D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D7A7267-2F11-4231-9509-DD54DCE60D56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF1EB4F-0915-428C-82C7-49260E1FC646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF1EB4F-0915-428C-82C7-49260E1FC646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF1EB4F-0915-428C-82C7-49260E1FC646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF1EB4F-0915-428C-82C7-49260E1FC646}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

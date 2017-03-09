@@ -74,7 +74,7 @@ namespace NetworkBombards_Player
         }
 
         public BG_Player()
-            : this("DefaultName")
+            : this("noname")
         {
             // No code
         }
