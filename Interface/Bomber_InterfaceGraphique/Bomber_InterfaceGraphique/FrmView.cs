@@ -12,17 +12,27 @@ namespace Bomber_InterfaceGraphique
 {
     public partial class FrmView : Form
     {
+        List<Player> playerlist = new List<Player>();
+        Graphics g;
+
         public FrmView()
         {
             InitializeComponent();
+            playerlist.Add(new Player("paul"));
+            playerlist.Add(new Player("wdwdw"));
+            playerlist.Add(new Player("ghhhhh"));
+
+            rtb_score.WriteScore(playerlist);
         }
 
+        // Show the debug form
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Debug debug = new Debug();
             debug.ShowDialog(this);
         }
 
+        // Quit the application
         private void quitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -34,6 +44,51 @@ namespace Bomber_InterfaceGraphique
             if (join.ShowDialog(this) == DialogResult.OK)
             {
                 MessageBox.Show("En cours");
+            }
+        }
+
+        private void FrmView_Paint(object sender, PaintEventArgs e)
+        {
+            // Get the graphics
+            g = e.Graphics;
+
+            // Draw the status
+            DrawConnectionStatus(g, true);
+        }
+
+        /// <summary>
+        /// Draw the connection status
+        ///     - Red => disconnected
+        ///     - Green => connected
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="isConnected"></param>
+        private void DrawConnectionStatus(Graphics g, bool isConnected)
+        {
+            Rectangle rect = new Rectangle(10, 30, 20, 20);
+
+            if (isConnected == true)
+            {
+                g.FillRectangle(Brushes.Green, rect);
+            }
+            else
+            {
+                g.FillRectangle(Brushes.Red, rect);
+            }
+        }
+
+        // Disable or enable the menu option
+        private void menuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (true) // Need to check if player already in game or not
+            {
+                rejoindrePartieToolStripMenuItem.Enabled = true;
+                quitterPartieToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                rejoindrePartieToolStripMenuItem.Enabled = false;
+                quitterPartieToolStripMenuItem.Enabled = true;
             }
         }
     }
