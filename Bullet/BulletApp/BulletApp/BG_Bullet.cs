@@ -19,59 +19,56 @@ namespace BulletApp
 
         #region properties
       /*  public float VelocityX { get; set; }
-        public float VelocityY { get; set; }*/      
+        public float VelocityY { get; set; }*/
+        public double _dx { get; set; }
         #endregion
 
         #region fields
         private int _x, _y;
         private int _toX, _toY;
+        private int _xInit, _yInit;
       
         private int _angle;
         private int _velocity;
         private Stopwatch _stp;
+        double _gravity;
         
         
         #endregion
 
         #region construcotrs
-        public BG_Bullet(int x, int y,int angle,int velocity)
+        public BG_Bullet(int x, int y, int angle, int velocity)
         {
-            this._x = x;
-            this._y = y;
+            this._x = this._xInit = x;
+            this._y = this._yInit = y;
             this._angle = angle;
             this._velocity = velocity;
+            this._gravity = 9.81;
             _stp = new Stopwatch();
             _stp.Start();
-
-            Destination();
-
+            this._dx = 0;
         }
         #endregion
 
         #region methods
 
-        public void Destination()
-        {
-            _toX = 861;
-            /*_toY = 200;*/
-        }
-
         public void Draw(PaintEventArgs e)
         {
-            // Calcul du X en fonction du temps
-            double factor = (Convert.ToDouble(this._stp.ElapsedMilliseconds) / Convert.ToDouble(TIMETOTARGET)) *1000;
 
-            int newX = this._x + Convert.ToInt32((this._toX - this._x) * factor);
-            int newY = (int)(0.5 * -0.5 * Math.Pow(factor, 2) + _velocity * Math.Sin(_angle) * factor);
-
-
-            e.Graphics.FillEllipse(Brushes.Red, newX, newY, RADIUS, RADIUS);
-
-            if (_stp.ElapsedMilliseconds >= TIMETOTARGET)
+            if (_stp.ElapsedMilliseconds >= 1)
             {
-                _stp.Stop();
+                _dx++;
+                _stp.Restart();
             }
-            //e.Graphics.DrawEllipse(Pens.Black, _x, _y, RADIUS, RADIUS);
+            
+            // https://fr.wikipedia.org/wiki/Trajectoire_d'un_projectile
+            //              Y0            +                dx  *      tan(angle)  - (    g    *          dx * dx  ) / (2 *         (                     v      *    cos(angle)) carré)   
+            _y = _yInit - Convert.ToInt32(Convert.ToDouble(0) + _dx * Math.Tan(_angle) - ((_gravity * Math.Pow(_dx, 2)) / (2d * Math.Pow(Convert.ToDouble(_velocity) * Math.Cos(_angle), 2))));
+             
+
+            // draw bullet
+            e.Graphics.FillEllipse(Brushes.Red, _x + Convert.ToInt32(_dx), _y, RADIUS, RADIUS);
+            e.Graphics.DrawEllipse(Pens.Black, _x + Convert.ToInt32(_dx), _y, RADIUS, RADIUS);
         }
         #endregion
 

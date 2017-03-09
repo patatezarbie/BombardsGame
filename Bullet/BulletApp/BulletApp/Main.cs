@@ -10,25 +10,34 @@ using System.Windows.Forms;
 
 namespace BulletApp
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
-        BG_Bullet bullet = new BG_Bullet(409, 305, 5, 20);
+        List<BG_Bullet> bullets = new List<BG_Bullet>();
 
-        public Form1()
+        public Main()
         {
             InitializeComponent();
-            
+            DoubleBuffered = true;
             Invalidate();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            bullet.Draw(e);
+            foreach (BG_Bullet bullet in bullets)
+            {
+                bullet.Draw(e);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Invalidate();
+            timer1.Enabled = true;
+            bullets.Add(new BG_Bullet(150, 300, 45, 50));
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Invalidate();         
         }
     }
 }
