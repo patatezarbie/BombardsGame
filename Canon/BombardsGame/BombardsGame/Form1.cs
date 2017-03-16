@@ -18,7 +18,7 @@ namespace BombardsGame
         public Form1()
         {
             InitializeComponent();
-            c1 = new BG_Cannon(Color.OrangeRed, new BG_Location(0,0));
+            c1 = new BG_Cannon(Color.OrangeRed, new BG_Location(50, 50));
             allowShot = false;
             this.DoubleBuffered = true;
         }
@@ -32,12 +32,12 @@ namespace BombardsGame
         {
             switch (e.KeyCode)
             {
-                case Keys.D:
-                    c1.AdjustAngle(2.5f);
+                case Keys.W:
+                    c1.AdjustAngle(-1f);
                     break;
 
-                case Keys.A:
-                    c1.AdjustAngle(-2.5f);
+                case Keys.S:
+                    c1.AdjustAngle(1f);
                     break;
                 case Keys.Space:
                     c1.Shoot();
@@ -51,14 +51,12 @@ namespace BombardsGame
         private void animator_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            label1.Text = "Location cannon Red: X : " + c1.Location.PosX + " Y : " + c1.Location.PosY;
+            /*label1.Text = "Location cannon Red: X : " + c1.Location.PosX + " Y : " + c1.Location.PosY;
             if (c1.Bullet != null)
             {
-                label2.Text = "Location bullet X : " + c1.Bullet._x + " Y : " + c1.Bullet._y;
+                label2.Text = "Location bullet X : " + c1.Bullet + " Y : " + c1.Bullet._y;
             }
-            
+            */
         }
-
-
     }
 }

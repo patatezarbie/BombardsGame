@@ -12,69 +12,70 @@ namespace BombardsGame
     public class BG_Bullet
     {
         #region constants
-        const int GRAVITY = 9;
+        const double GRAVITY = 9;
         const int RADIUS = 10; //px
-        const int TIMETOTARGET = 3000; //ms
+        const int DISPLAY_TIME = 250; //ms
         #endregion
 
         #region properties
-        /*  public float VelocityX { get; set; }
-        public float VelocityY { get; set; }*/
+        public double _dx { get; set; }
         #endregion
 
         #region fields
-        public int _x, _y;
-        private int _toX, _toY;
-
+        private int _x, _y;
+        private int _xInit, _yInit;
         private int _angle;
         private int _velocity;
         private Stopwatch _stp;
-
+        public int Test = 0;
 
         #endregion
 
         #region construcotrs
+        /// <summary>
+        /// Create a new bullet
+        /// </summary>
+        /// <param name="x">location x</param>
+        /// <param name="y">location y</param>
+        /// <param name="angle">angle of the bullet</param>
+        /// <param name="velocity">velocity of the bullet</param>
         public BG_Bullet(int x, int y, int angle, int velocity)
         {
-            this._x = x;
-            this._y = y;
+            this._x = this._xInit = x;
+            this._y = this._yInit = y;
             this._angle = angle;
             this._velocity = velocity;
             _stp = new Stopwatch();
             _stp.Start();
-
-            Destination();
+            this._dx = 0;
 
         }
         #endregion
 
         #region methods
 
-        public void Destination()
-        {
-            _toX = 500;
-            /*_toY = 200;*/
-        }
-
+        /// <summary>
+        /// Calculate the position of the bullet and draw the bullet
+        /// </summary>
+        /// <param name="e"></param>
         public void Draw(PaintEventArgs e)
         {
-            // Calcul du X en fonction du temps
-            double factor = (Convert.ToDouble(this._stp.ElapsedMilliseconds) / Convert.ToDouble(TIMETOTARGET)) * 1000;
+            double angle_rad = this._angle * Math.PI / 180;
+            // time of the MRUA of the bullet
+            double t = (double)_stp.ElapsedMilliseconds / DISPLAY_TIME;
 
-            int newX = this._x + Convert.ToInt32((this._toX - this._x) * factor);
-            int newY = (int)(0.5 * -0.5 * Math.Pow(factor, 2) + _velocity * Math.Sin(_angle) * factor);
+            // http://www.sem-experimentation.ch/~math/spip.php?article415
+            // MRU
+            _x = _xInit + Convert.ToInt32(Convert.ToDouble(_velocity) * Math.Cos(angle_rad) * t);
+            // MRUA
+            _y = _yInit - Convert.ToInt32(Convert.ToDouble(_velocity) * Math.Sin(angle_rad) * t + 0.5d * -GRAVITY * Math.Pow(t, 2));
 
-
-            e.Graphics.FillEllipse(Brushes.Red, newX, newY, RADIUS, RADIUS);
-
-            if (_stp.ElapsedMilliseconds >= TIMETOTARGET)
-            {
-                _stp.Stop();
-            }
-            e.Graphics.DrawEllipse(Pens.Black, _x, _y, RADIUS, RADIUS);
+            // draw bullet
+            e.Graphics.FillEllipse(Brushes.Red, _x + Convert.ToInt32(_dx), _y, RADIUS, RADIUS);
+            e.Graphics.DrawEllipse(Pens.Black, _x + Convert.ToInt32(_dx), _y, RADIUS, RADIUS);
+            
         }
         #endregion
-
 
     }
 }

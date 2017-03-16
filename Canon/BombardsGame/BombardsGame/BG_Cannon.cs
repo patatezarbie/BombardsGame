@@ -1,15 +1,12 @@
-﻿/*
+﻿using System;
+/*
     Authors             : Julien Faeh, Jordan Dacuna Rodriguez 
-    Description         :
+    Description         : This class represent a cannon control by a player and he can adjust the angle and move it to another position.
+                          The cannon can shoot and be drawed.
     Version             : v1 - 09/03/17
     Class               : T.IS.E2B
  */
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BombardsGame
@@ -22,7 +19,7 @@ namespace BombardsGame
         const int DEFAULT_BODY_SIZE_Y = 50;
         const int DEFAULT_CANNON_SIZE_X = 20;
         const int DEFAULT_CANNON_SIZE_Y = 50;
-        const int DEFAULT_ANGLE_MAX = 360;
+        const int DEFAULT_ANGLE_MAX = 359;
         const int DEFAULT_ANGLE_MIN = 0;
         #endregion
 
@@ -30,8 +27,7 @@ namespace BombardsGame
         private Brush defaultBulletBrush;
         private Brush defaultCannonBrush;
         private Rectangle RecBody;
-        private Rectangle RecCannon;
-        private bool permissionToFire;
+        private Rectangle RecCannon;       
         #endregion
 
         #region Properties
@@ -42,6 +38,7 @@ namespace BombardsGame
         public BG_Location Location { get; set; }
         public int Force { get; set; }
         public BG_Bullet Bullet { get; set; }
+        public bool PermissionToFire { get; set; }
         #endregion
 
         #region Constructors
@@ -65,7 +62,7 @@ namespace BombardsGame
             
             this.RecBody = new Rectangle(Location.PosX, Location.PosY, this.BodySize.Width, this.BodySize.Height);
             this.RecCannon = new Rectangle(new Point(0, 0), this.CannonSize);
-            this.permissionToFire = false;
+            this.PermissionToFire = false;
         }
 
         /// <summary>
@@ -100,12 +97,15 @@ namespace BombardsGame
 
             if (this.Rotation >= DEFAULT_ANGLE_MAX)
             {
+                
                 this.Rotation -= DEFAULT_ANGLE_MAX; //This set the angle to a number lower than 360 
             }    
             if(this.Rotation < DEFAULT_ANGLE_MIN)
             {
+                
                 this.Rotation += DEFAULT_ANGLE_MAX;
             }
+           
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace BombardsGame
         /// </summary>
         public void Shoot()
         {
-            permissionToFire = true;
+            PermissionToFire = true;
         }
 
         /// <summary>
@@ -122,28 +122,33 @@ namespace BombardsGame
         /// <param name="e">Drawing zone</param>
         public void Draw(PaintEventArgs e)
         {
-            e.Graphics.TranslateTransform(Location.PosX, Location.PosY); 
-            e.Graphics.RotateTransform(this.Rotation);
+            e.Graphics.TranslateTransform(Location.PosX, Location.PosY);            
+            e.Graphics.RotateTransform((int)this.Rotation - 90);
 
             RecBody.Location = new Point(0 - this.RecBody.Width /2, 0 - this.RecBody.Height/2);
 
             e.Graphics.FillRectangle(defaultCannonBrush, this.RecCannon.Location.X - this.RecCannon.Width / 2, this.RecCannon.Y, this.RecCannon.Width, this.RecCannon.Height);
 
-            e.Graphics.FillEllipse(BobyBrush, this.RecBody);
+            e.Graphics.FillEllipse(BobyBrush, this.RecBody);           
 
-            //This represent the center of the rotation
+            //This represent the center of the rotation. Use this in case of test.
             //e.Graphics.FillEllipse(Brushes.Red, -5, -5, 10, 10);
-            
-            if(permissionToFire)
+            //e.Graphics.RotateTransform(-(int)(this.Rotation - 90));
+            e.Graphics.RotateTransform(this.Rotation);
+            if (PermissionToFire)
             {
-                Bullet = new BG_Bullet(RecCannon.Location.X - RecCannon.Width / 4, RecCannon.Location.Y + RecCannon.Height, 10,1);
-                if (Bullet != null)
-                {
-                    Bullet.Draw(e);
-                }
-                permissionToFire = false;
+                
+                Bullet = new BG_Bullet(RecCannon.Location.X - RecCannon.Width / 4, RecCannon.Location.Y + RecCannon.Height, (int)this.Rotation, 50);
+
+                Bullet.Draw(e);
+                PermissionToFire = false;
+            }            
+
+            if (Bullet != null)
+            {
+                Bullet.Draw(e);
             }
-            
+
             e.Graphics.ResetTransform();
         }
         #endregion

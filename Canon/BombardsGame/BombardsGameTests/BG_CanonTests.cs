@@ -32,16 +32,16 @@ namespace BombardsGame.Tests
 
             Assert.AreEqual(c1.Rotation, 0.0f);
 
-            c1.ajustAngle(5.0f);
+            c1.AdjustAngle(5.0f);
 
             Assert.AreEqual(c1.Rotation, 5.0f);
 
             // 5 + 360 = 365
-            c1.ajustAngle(360.0f);
+            c1.AdjustAngle(360.0f);
 
             Assert.AreEqual(c1.Rotation, 5.0f);
 
-            c1.ajustAngle(-10.0f);
+            c1.AdjustAngle(-10.0f);
 
             Assert.AreEqual(c1.Rotation, 355.0f);
         }        
