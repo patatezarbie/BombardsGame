@@ -45,8 +45,8 @@ namespace BulletApp
         public BG_Bullet(int x, int y, int angle, int velocity)
         {
             this._x = this._xInit = x;
-            this._y = this._yInit = y;
-            this._angle = angle;
+            this._y = this._yInit = y;            
+            this._angle = angle;            
             this._velocity = velocity;            
             _stp = new Stopwatch();
             _stp.Start();         
@@ -64,12 +64,13 @@ namespace BulletApp
             //transfome angle form degres to radians
             double angle_rad = this._angle * Math.PI / 180;
 
+            Console.WriteLine(angle_rad);
             // time of the MRUA of the bullet
             double t = (double)_stp.ElapsedMilliseconds / DISPLAY_TIME;
 
             // http://www.sem-experimentation.ch/~math/spip.php?article415
             // MRU
-            _x = _yInit - Convert.ToInt32(Convert.ToDouble(_velocity) * Math.Cos(angle_rad) * t);
+            _x = _xInit + Convert.ToInt32(Convert.ToDouble(_velocity) * Math.Cos(angle_rad) * t);
             // MRUA - 0.5 is the 1/2 for MRUA formule
             _y = _yInit - Convert.ToInt32(Convert.ToDouble(_velocity) * Math.Sin(angle_rad) * t + 0.5d * -GRAVITY * Math.Pow(t, 2));   
 
