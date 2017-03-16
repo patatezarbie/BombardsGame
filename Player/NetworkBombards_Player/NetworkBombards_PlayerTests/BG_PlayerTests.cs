@@ -67,5 +67,11 @@ namespace NetworkBombards_Player.Tests
             player.AddHistory(hit)*/
             Assert.Fail();
         }
+
+        [TestMethod()]
+        public void MoveFromStringTest()
+        {
+            string input = "";
+        }
     }
 }

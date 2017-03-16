@@ -149,8 +149,7 @@ namespace NetworkBombards_Player
         /// <param name="str"></param>
         public void MoveFromString(string input)
         {
-
-            string regex = "";
+            string regex = "\\([^,;.]+;[0-9]{0,3};[0-9]{0,3}\\)";
             string[] substrings = Regex.Split(input, regex);
             foreach (string match in substrings)
             {

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BG_Bullet.cs" />
     <Compile Include="BG_Cannon.cs" />
+    <Compile Include="BG_Client.cs" />
     <Compile Include="BG_Location.cs" />
     <Compile Include="BG_Player.cs" />
     <Compile Include="BG_Hit.cs" />
