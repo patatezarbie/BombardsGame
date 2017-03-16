@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Bomber_InterfaceGraphique
 {
-    class BG_PowerBarBackground
+    public class BG_PowerBarBackground
     {
         #region Constants
         private static readonly Color DEFAULT_COLOR = Color.FromArgb(174, 137, 100);

@@ -2,16 +2,16 @@
 
 namespace Bomber_InterfaceGraphique
 {
-    class BG_PowerBar
+    public class BG_PowerBar
     {
         #region Constants
         private const float START_VALUE = 0;
         private const float MAX_VALUE = 100;
         private const int ADJUSTER = 5;
-        private const bool DEFAULT_VISIBLE = true;
-        private const bool STARTED_STATE = false;
-        private const float DEFAULT_WIDTH = 200;
-        private const float DEFAULT_HEIGHT = 30;
+        private const bool DEFAULT_VISIBLE = false;
+        public const bool STARTED_STATE = false;
+        public static float DEFAULT_WIDTH = 200;
+        public static float DEFAULT_HEIGHT = 30;
         #endregion
 
         #region Properties

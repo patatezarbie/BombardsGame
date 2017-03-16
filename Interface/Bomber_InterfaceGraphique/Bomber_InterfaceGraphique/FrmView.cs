@@ -16,60 +16,69 @@ namespace Bomber_InterfaceGraphique
     {
         #region Properties
         List<Player> playerlist = new List<Player>();
-        Graphics g;
-        BG_PowerBar bgBar;
-        Timer test;
-        bool spacePressed;
+        public BG_PowerBar PowerBar { get; set; }
+        public Timer Watch { get; set; }
+        public bool SpacePressed { get; set; }
+        #endregion
 
         public FrmView()
         {
-            this.KeyPreview = true;
+            this.KeyPreview = true; // Add key event on the WinForm
             this.DoubleBuffered = true;
             InitializeComponent();
-
-            playerlist.Add(new Player("paul"));
-            playerlist.Add(new Player("wdwdw"));
-            playerlist.Add(new Player("ghhhhh"));
-
-            rtb_score.WriteScore(playerlist);
-            bgBar = new BG_PowerBar(200, this.Height - 100);
-
-            this.test = new Timer();
-            this.test.Interval = 1;
-            this.test.Tick += test_Tick;
-            this.test.Start();
-
-            this.spacePressed = false;
         }
 
-        void test_Tick(object sender, EventArgs e)
+        private void FrmView_Load(object sender, EventArgs e)
+        {
+            rtb_score.WriteScore(playerlist);
+            // Place on the game panel center (Winform without right informations)
+            this.PowerBar = new BG_PowerBar((this.Width - this.pictureBox1.Width) / 2 - (BG_PowerBar.DEFAULT_WIDTH / 2), this.Bounds.Height - 100); // 100 to show, else the bar is outside the winform
+
+            /*playerlist.Add(new Player("paul"));
+            playerlist.Add(new Player("wdwdw"));
+            playerlist.Add(new Player("ghhhhh"));*/
+
+            this.Watch = new Timer();
+            this.Watch.Interval = 1;
+            this.Watch.Tick += Watch_Tick;
+            this.Watch.Start();
+
+            this.SpacePressed = false;
+        }
+
+        /// <summary>
+        /// Watch game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Watch_Tick(object sender, EventArgs e)
         {
             this.Refresh();
 
             if (!this.Focused)
                 this.Focus();
 
-            if (this.spacePressed)
-                this.bgBar.StartProgress();
-            else if (!this.spacePressed)
-                this.bgBar.StopProgress();
+            if (this.SpacePressed)
+                this.PowerBar.StartProgress();
+            else if (!this.SpacePressed)
+                this.PowerBar.StopProgress();
 
         }
 
         // Show the debug form
-        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TSMIDebug_Click(object sender, EventArgs e)
         {
             Debug debug = new Debug();
             debug.ShowDialog(this);
         }
 
         // Quit the application
-        private void quitterToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TSMIQuit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void rejoindrePartieToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TSMIJoinGame_Click(object sender, EventArgs e)
         {
             JoinGame join = new JoinGame();
             if (join.ShowDialog(this) == DialogResult.OK)
@@ -80,13 +89,10 @@ namespace Bomber_InterfaceGraphique
 
         private void FrmView_Paint(object sender, PaintEventArgs e)
         {
-            // Get the graphics
-            g = e.Graphics;
-
             // Draw the status
-            DrawConnectionStatus(g, true);
+            DrawConnectionStatus(e.Graphics, false);
 
-            this.bgBar.Draw(e);
+            this.PowerBar.Draw(e); // Draw the power bar
         }
 
         /// <summary>
@@ -111,17 +117,17 @@ namespace Bomber_InterfaceGraphique
         }
 
         // Disable or enable the menu option
-        private void menuToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TSMIMenu_Click(object sender, EventArgs e)
         {
             if (true) // Need to check if player already in game or not
             {
-                rejoindrePartieToolStripMenuItem.Enabled = true;
-                quitterPartieToolStripMenuItem.Enabled = false;
+                TSMIJoinGame.Enabled = true;
+                TSMIQuitGame.Enabled = false;
             }
             else
             {
-                rejoindrePartieToolStripMenuItem.Enabled = false;
-                quitterPartieToolStripMenuItem.Enabled = true;
+                TSMIJoinGame.Enabled = false;
+                TSMIQuitGame.Enabled = true;
             }
         }
 
@@ -129,8 +135,7 @@ namespace Bomber_InterfaceGraphique
         {
             if (e.KeyCode == Keys.Space)
             {
-                this.spacePressed = true;
-                Console.WriteLine("Space pressed");
+                this.SpacePressed = true;
             }
                 
         }
@@ -138,7 +143,9 @@ namespace Bomber_InterfaceGraphique
         private void FrmView_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
-                this.spacePressed = false;
+                this.SpacePressed = false;
         }
+
+
     }
 }

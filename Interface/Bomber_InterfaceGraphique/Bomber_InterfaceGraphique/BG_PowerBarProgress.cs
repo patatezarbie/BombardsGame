@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Bomber_InterfaceGraphique
 {
-    class BG_PowerBarProgress
+    public class BG_PowerBarProgress
     {
         #region Constants
         private static readonly Color DEFAULT_COLOR = Color.FromArgb(49, 140, 231);

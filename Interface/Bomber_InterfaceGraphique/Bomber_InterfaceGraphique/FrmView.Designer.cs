@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmView));
             this.ms_Menu = new System.Windows.Forms.MenuStrip();
-            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rejoindrePartieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.quitterPartieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIJoinGame = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIQuitGame = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.quitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIQuit = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.rtb_score = new System.Windows.Forms.RichTextBox();
             this.ms_Menu.SuspendLayout();
@@ -45,57 +45,57 @@
             // ms_Menu
             // 
             this.ms_Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem,
-            this.debugToolStripMenuItem});
+            this.TSMIMenu,
+            this.TSMIDebug});
             this.ms_Menu.Location = new System.Drawing.Point(0, 0);
             this.ms_Menu.Name = "ms_Menu";
             this.ms_Menu.Size = new System.Drawing.Size(1008, 24);
             this.ms_Menu.TabIndex = 1;
-            this.ms_Menu.Text = "menuStrip1";
+            this.ms_Menu.Text = "Menu";
             // 
-            // menuToolStripMenuItem
+            // TSMIMenu
             // 
-            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rejoindrePartieToolStripMenuItem,
-            this.quitterPartieToolStripMenuItem,
+            this.TSMIMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMIJoinGame,
+            this.TSMIQuitGame,
             this.toolStripMenuItem1,
-            this.quitterToolStripMenuItem});
-            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.menuToolStripMenuItem.Text = "Menu";
-            this.menuToolStripMenuItem.Click += new System.EventHandler(this.menuToolStripMenuItem_Click);
+            this.TSMIQuit});
+            this.TSMIMenu.Name = "TSMIMenu";
+            this.TSMIMenu.Size = new System.Drawing.Size(50, 20);
+            this.TSMIMenu.Text = "Menu";
+            this.TSMIMenu.Click += new System.EventHandler(this.TSMIMenu_Click);
             // 
-            // rejoindrePartieToolStripMenuItem
+            // TSMIJoinGame
             // 
-            this.rejoindrePartieToolStripMenuItem.Name = "rejoindrePartieToolStripMenuItem";
-            this.rejoindrePartieToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.rejoindrePartieToolStripMenuItem.Text = "Rejoindre partie";
-            this.rejoindrePartieToolStripMenuItem.Click += new System.EventHandler(this.rejoindrePartieToolStripMenuItem_Click);
+            this.TSMIJoinGame.Name = "TSMIJoinGame";
+            this.TSMIJoinGame.Size = new System.Drawing.Size(157, 22);
+            this.TSMIJoinGame.Text = "Rejoindre partie";
+            this.TSMIJoinGame.Click += new System.EventHandler(this.TSMIJoinGame_Click);
             // 
-            // quitterPartieToolStripMenuItem
+            // TSMIQuitGame
             // 
-            this.quitterPartieToolStripMenuItem.Name = "quitterPartieToolStripMenuItem";
-            this.quitterPartieToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.quitterPartieToolStripMenuItem.Text = "Quitter partie";
+            this.TSMIQuitGame.Name = "TSMIQuitGame";
+            this.TSMIQuitGame.Size = new System.Drawing.Size(157, 22);
+            this.TSMIQuitGame.Text = "Quitter partie";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(154, 6);
             // 
-            // quitterToolStripMenuItem
+            // TSMIQuit
             // 
-            this.quitterToolStripMenuItem.Name = "quitterToolStripMenuItem";
-            this.quitterToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.quitterToolStripMenuItem.Text = "Quitter";
-            this.quitterToolStripMenuItem.Click += new System.EventHandler(this.quitterToolStripMenuItem_Click);
+            this.TSMIQuit.Name = "TSMIQuit";
+            this.TSMIQuit.Size = new System.Drawing.Size(157, 22);
+            this.TSMIQuit.Text = "Quitter";
+            this.TSMIQuit.Click += new System.EventHandler(this.TSMIQuit_Click);
             // 
-            // debugToolStripMenuItem
+            // TSMIDebug
             // 
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.debugToolStripMenuItem.Text = "Debug";
-            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
+            this.TSMIDebug.Name = "TSMIDebug";
+            this.TSMIDebug.Size = new System.Drawing.Size(54, 20);
+            this.TSMIDebug.Text = "Debug";
+            this.TSMIDebug.Click += new System.EventHandler(this.TSMIDebug_Click);
             // 
             // pictureBox1
             // 
@@ -133,6 +133,7 @@
             this.Name = "FrmView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bombards Game";
+            this.Load += new System.EventHandler(this.FrmView_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmView_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmView_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmView_KeyUp);
@@ -147,12 +148,12 @@
         #endregion
         private System.Windows.Forms.MenuStrip ms_Menu;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rejoindrePartieToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem quitterPartieToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMIMenu;
+        private System.Windows.Forms.ToolStripMenuItem TSMIJoinGame;
+        private System.Windows.Forms.ToolStripMenuItem TSMIQuitGame;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem quitterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMIQuit;
+        private System.Windows.Forms.ToolStripMenuItem TSMIDebug;
         private System.Windows.Forms.RichTextBox rtb_score;
     }
 }
