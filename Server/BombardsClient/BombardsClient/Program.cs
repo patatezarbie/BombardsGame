@@ -32,7 +32,7 @@ namespace BombardsClient
 
             // Main loop
             Thread.Sleep(7000);
-            user.SendMessages(user.Name + ";" + "endturn");
+            user.SendMessages("endturn");
             Console.ReadLine();
         }
     }

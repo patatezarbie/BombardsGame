@@ -128,6 +128,7 @@ namespace BombardsServer
                 // Do the rest
                 this.CheckForDisconnects();
                 this.CheckForNewMessages();
+                Thread.Sleep(250);
                 this.SendMessages();
 
                 // Update only every 10ms
@@ -178,14 +179,14 @@ namespace BombardsServer
                     client.GetStream().Read(msgBuffer, 0, msgBuffer.Length);
 
                     // Attach a name to it and shove it into the queue
-                    string msg = String.Format("{0}: {1}", this.Names[client], Encoding.UTF8.GetString(msgBuffer));
+                    string msg = String.Format("{0}", Encoding.UTF8.GetString(msgBuffer));
                     this.MessageQueue.Enqueue(msg);
                 }
             }
         }
 
         // Clears out the message queue (and sends it to all of the viewers
-        private void SendMessages()
+        public void SendMessages()
         {
             foreach (string message in this.MessageQueue)
             {

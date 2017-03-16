@@ -21,6 +21,7 @@ namespace BombardsServer
         private string _roomName;
         private int _terrainSeed;
         private int _port;
+        
 
         private BG_Server _server;
         #endregion
@@ -158,29 +159,37 @@ namespace BombardsServer
                         }
                         break;
                     case ServerState.PlayerTurn:
+                        bool isPlayerTurn = true;
+
                         // Choose a player to play
                         this.NewTurn();
 
                         // Await player response
-                        while (true)
+                        while (isPlayerTurn)
                         {
                             // Avoid mixing messages
                             Thread.Sleep(SLEEP_TIME * 2);
 
-                            // If we receive a message we break
+                            // If we receive the endturn message, we break
                             foreach (var message in this.Server.MessageQueue)
                             {
-                                string filteredMessage = message.Split(';')[1];
-
-                                if (filteredMessage == "endturn")
+                                if (message == "endturn")
                                 {
-                                    break;
+                                    isPlayerTurn = false;
                                 }
                             }
                         }
 
-                        // If we broke out of the loop we switch back to another player turn
+                        // Make sure the client update
+                        this.Server.SendMessages();
 
+                        // If we reach the final turn, we end the game
+                        if (false)
+                        {
+                            this.State = ServerState.GameEnd;
+                        }
+
+                        // If we didn't switch state, go back to another player's turn
                         break;
                     case ServerState.GameEnd:
                         break;
