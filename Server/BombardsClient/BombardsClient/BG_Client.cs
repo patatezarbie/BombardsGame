@@ -253,6 +253,17 @@ namespace BombardsClient
                 return true;
             }
         }
+
+        /// <summary>
+        /// Disconnect the client when called
+        /// </summary>
+        public void Disconnect()
+        {
+            if (!this.IsDisconnected(this.TcpClient))
+            {
+                this.SendMessages("quit");
+            }
+        }
         #endregion
     }
 }
