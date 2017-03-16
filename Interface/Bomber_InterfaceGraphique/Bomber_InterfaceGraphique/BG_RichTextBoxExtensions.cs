@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Bomber_InterfaceGraphique
 {
-    public static class RichTextBoxExtensions
+    public static class BG_RichTextBoxExtensions
     {
         public static void AppendText(this RichTextBox box, string text, Color color)
         {

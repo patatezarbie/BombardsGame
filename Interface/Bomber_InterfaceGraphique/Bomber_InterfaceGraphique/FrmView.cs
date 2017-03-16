@@ -1,4 +1,11 @@
-﻿using System;
+﻿/* *
+ * Project     : BombardsGame
+ * Description :
+ * Authors     : De Biasi Loris, Devaud Alan
+ * Date        : 17.03.2017
+ * Version     : 1.0
+ * */
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,31 +14,46 @@ namespace Bomber_InterfaceGraphique
 {
     public partial class FrmView : Form
     {
+        #region Properties
         List<Player> playerlist = new List<Player>();
         Graphics g;
         BG_PowerBar bgBar;
         Timer test;
+        bool spacePressed;
 
         public FrmView()
         {
+            this.KeyPreview = true;
             this.DoubleBuffered = true;
             InitializeComponent();
+
             playerlist.Add(new Player("paul"));
             playerlist.Add(new Player("wdwdw"));
             playerlist.Add(new Player("ghhhhh"));
 
             rtb_score.WriteScore(playerlist);
             bgBar = new BG_PowerBar(200, this.Height - 100);
-            
+
             this.test = new Timer();
             this.test.Interval = 1;
             this.test.Tick += test_Tick;
             this.test.Start();
+
+            this.spacePressed = false;
         }
 
         void test_Tick(object sender, EventArgs e)
         {
             this.Refresh();
+
+            if (!this.Focused)
+                this.Focus();
+
+            if (this.spacePressed)
+                this.bgBar.StartProgress();
+            else if (!this.spacePressed)
+                this.bgBar.StopProgress();
+
         }
 
         // Show the debug form
@@ -101,6 +123,22 @@ namespace Bomber_InterfaceGraphique
                 rejoindrePartieToolStripMenuItem.Enabled = false;
                 quitterPartieToolStripMenuItem.Enabled = true;
             }
+        }
+
+        private void FrmView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                this.spacePressed = true;
+                Console.WriteLine("Space pressed");
+            }
+                
+        }
+
+        private void FrmView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+                this.spacePressed = false;
         }
     }
 }

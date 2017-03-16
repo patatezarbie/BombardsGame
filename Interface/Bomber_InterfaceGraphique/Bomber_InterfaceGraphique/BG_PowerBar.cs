@@ -103,11 +103,25 @@ namespace Bomber_InterfaceGraphique
         /// <summary>
         /// Enable or disable the progress event
         /// </summary>
-        public void StartStopProgress()
+        private void StartStopProgress()
         {
             if (this.IsVisible)
                 this.IsStarted = !this.IsStarted;
         }
+
+        public void StartProgress()
+        {
+            if (!this.IsStarted)
+                this.StartStopProgress();
+        }
+
+        public void StopProgress()
+        {
+            if (this.IsStarted)
+                this.StartStopProgress();
+        }
+
+
 
         /// <summary>
         /// Draw element

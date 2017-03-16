@@ -109,6 +109,7 @@
             // 
             // rtb_score
             // 
+            this.rtb_score.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtb_score.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtb_score.Location = new System.Drawing.Point(708, 27);
             this.rtb_score.Name = "rtb_score";
@@ -133,6 +134,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bombards Game";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmView_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmView_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmView_KeyUp);
             this.ms_Menu.ResumeLayout(false);
             this.ms_Menu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
