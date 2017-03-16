@@ -19,8 +19,6 @@ namespace BombardsServer
         public static void Main(string[] args)
         {
             // Create the game manager
-            
-
             string name = "Bombards CFPT";
             int port = 8000;
             bombardsGame = new BG_GameManager(name, port, 42);

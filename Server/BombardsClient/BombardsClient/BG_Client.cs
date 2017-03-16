@@ -214,6 +214,7 @@ namespace BombardsClient
 
                     if (nameFromMsg != this.Name)
                     {
+                        // TODO : Fetch the messages in a array/list/queue ??
                         Console.WriteLine(Environment.NewLine + msg);
                     }
                 }
