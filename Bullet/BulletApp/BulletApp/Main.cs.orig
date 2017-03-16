@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace BulletApp
+{
+    public partial class Form1 : Form
+    {
+        List<BG_Bullet> bullets = new List<BG_Bullet>();
+
+        public Form1()
+        {
+            InitializeComponent();
+            DoubleBuffered = true;
+            Invalidate();
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            Pen p = new Pen(Color.Green);
+            e.Graphics.DrawRectangle(p, 300, 300, 10, 10);
+            List<BG_Bullet> bulletsToRemove = new List<BG_Bullet>();
+            foreach (BG_Bullet bullet in bullets)
+            {
+<<<<<<< HEAD
+                if (bullet.Visible)
+                {
+                    bullet.Draw(e);
+                }              
+=======
+                if(bullet.position.X < this.Width && bullet.position.X > -1 && bullet.position.Y < this.Height )
+                    bullet.Draw(e);
+                else
+                {
+                    bulletsToRemove.Add(bullet);
+                   
+                }
+>>>>>>> adding properties for bullet position and radius
+            }
+            foreach (BG_Bullet bullet in bulletsToRemove)
+            {
+                bullets.Remove(bullet);
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+<<<<<<< HEAD
+            bullets.Add(new BG_Bullet(250, 300, (int)nudAngle.Value, (int)nudVelocity.Value));
+=======
+            bullets.Add(new BG_Bullet(300, 300, (int)nudAngle.Value, (int)nudVelocity.Value));
+>>>>>>> adding properties for bullet position and radius
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Invalidate();         
+        }
+    }
+}
