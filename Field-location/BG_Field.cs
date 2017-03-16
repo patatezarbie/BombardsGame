@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Field_Location_SampleProject
 {
@@ -18,18 +19,15 @@ namespace Field_Location_SampleProject
     {
         // Constants
         // The number of pixel between each points 
-        private const int POINT_INTERVAL = 60; // <- /!\ Please note that this value must be adapted manualy for it to properly work, will be fixed and updated soon
+        private const int POINT_INTERVAL = 50; // <- /!\ Please note that this value must be adapted manualy for it to properly work, will be fixed and updated soon
         // The starting displacement value used for the midpoint displacement algorithm
         private const int DEFAULT_DISPLACE = 40;
         // The displacement reduce value used for the midpoint displacement algorithm
         // *If you change this value between 0.4 and 0.9, the field rougthness will variate
-        private const double DISPLACEMENT_REDUCE = 0.5;
-        // The smoothness value changes the number of midpoint displacement cicles
-        // *Depending on the seed, changing this value between 1 and 10 affects the line smoothness*
-        private const int SMOOTHNESS = 1;
+        private const double DISPLACEMENT_REDUCE = 0.4;
         // The moutain value is a interval used to change terrain height variations
         // *Changing the number between 2 and 8 will change the terrain height variations. The lower the number , the more mountains*
-        private const int MOUNTAINS = 5;
+        private const int MOUNTAINS = 6;
 
         // Variables
         private Random _rnd;
@@ -95,8 +93,8 @@ namespace Field_Location_SampleProject
                 }
             }
 
-            // Number of repetitions of the midpoint displacement algorithm on each segment, each run, the number of points is doubled
-            for (int j = 0; j < SMOOTHNESS; j++)
+            // Number of repetions of the midpoint displacement algorithm on each segment, each run, the number of points is doubled
+            while ( (this.Locations[1].PosX - this.Locations[0].PosX) != 1)
             {
                 // Start for last point and finishes at first point (right side of the screen to the left)
                 for (int i = Locations.Count() - 1; i > 0; i--)
@@ -122,6 +120,24 @@ namespace Field_Location_SampleProject
                 }
             }
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bulletX"></param>
+        /// <param name="bulletY"></param>
+        /// <returns></returns>
+        private bool IsFieldTouched(int bulletX, int bulletY)
+        {
+            foreach (BG_Location location in this.Locations)
+            {
+                if (bulletX == location.PosX && bulletY < location.PosY)
+                {
+                    MessageBox.Show("Bullet has touched");
+                }
+            }
+            return true;
         }
 
     }
