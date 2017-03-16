@@ -149,12 +149,25 @@ namespace NetworkBombards_Player
         /// <param name="str"></param>
         public void MoveFromString(string input)
         {
-            string regex = "\\([^,;.]+;[0-9]{0,3};[0-9]{0,3}\\)";
-            string[] substrings = Regex.Split(input, regex);
-            foreach (string match in substrings)
+            string regex = "\\(([^,;.]+);([0-9]{1,3});([0-9]{1,3})\\)";
+
+            MatchCollection matches = Regex.Matches(input, regex);
+
+            foreach (Match match in matches)
             {
-                Console.WriteLine("'{0}'", match);
+                string[] values = Regex.Split(match.Value, regex);
+
+                string name = values[1];
+                int x = int.Parse(values[2]);
+                int y = int.Parse(values[3]);
+
+                Console.WriteLine("name : {0}{3}x : {1}{3}y : {2}", name, x, y, Environment.NewLine);
             }
+        }
+
+        public void MoveCannon(BG_Location location)
+        {
+            this.Cannon.Location = location;
         }
         #endregion
     }
