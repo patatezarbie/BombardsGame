@@ -1,6 +1,6 @@
 ﻿/* 
  * Robin Plojoux, DEylan Wacker - CFPT-I  
- * 09.03.2017
+ * 16.03.2017
  * POO 
  * POO tech project - Exaple project
  * 
@@ -24,7 +24,9 @@ namespace Field_Location_SampleProject
         Graphics g;
         Pen pen;
         SolidBrush b;
+        SolidBrush b2;
         Random rnd;
+        float fieldSize;
 
         public View()
         {
@@ -35,31 +37,44 @@ namespace Field_Location_SampleProject
         {
             g = panelDraw.CreateGraphics();
             b = new SolidBrush(Color.Green);
-            pen = new Pen(Color.Green);
-            pen.Width = 2;
+            b2 = new SolidBrush(Color.DarkGreen);
             rnd = new Random();
+            fieldSize = 2.2f;
 
             DrawField();
         }
 
         public void DrawField()
         {
-            field = new BG_Field(panelDraw.Width, panelDraw.Height, rnd.Next(0,999));
+            int seed = rnd.Next(0,9999);
+            lblSeed.Text = seed.ToString();
+            field = new BG_Field(panelDraw.Width, panelDraw.Height, seed);
             //field = new BG_Field(panelDraw.Width, panelDraw.Height, 1); 
         }
 
         private void panelDraw_Paint(object sender, PaintEventArgs e)
         {
-            //Draw rectangles
+            // Bullet hit test
+            int x = rnd.Next(0, panelDraw.Width);
+            int y = rnd.Next(0, panelDraw.Height);
 
+            //Draw field points
             foreach (var l in field.Locations)
             {
-                g.FillRectangle(b, l.PosX, l.PosY , 2.2f, 2.2f);
+                g.FillEllipse(b2, l.PosX, l.PosY, fieldSize, fieldSize);
+                g.FillEllipse(b, l.PosX, l.PosY, fieldSize * 2, fieldSize * 2);
             }
+
+            g.FillEllipse(new SolidBrush(Color.Black), x - 3f, y - 3f, 6f, 6f);
+
+            bool hit = field.IsFieldTouched(new BG_Location(x, y));
+            lblBulletHit.Text = hit.ToString();
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
+            DrawField();
+            panelDraw.Invalidate();
         }
     }
 }

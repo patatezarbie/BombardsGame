@@ -1,10 +1,12 @@
 ﻿/* 
  * Robin Plojoux, Dylan Wacker - CFPT-I  
- * 09.03.2017
+ * 16.03.2017
  * POO 
  * POO tech project - BG_Field.cs
  * 
  * Description : Generate field points for the bombard game
+ *               Code based on the Midpoint Displacement algorithm in one dimension
+ *               Explanation of the algorithm at http://www.gameprogrammer.com/fractal.html
  */
 using System;
 using System.Collections.Generic;
@@ -18,16 +20,16 @@ namespace Field_Location_SampleProject
     class BG_Field
     {
         // Constants
-        // The number of pixel between each points 
-        private const int POINT_INTERVAL = 50; // <- /!\ Please note that this value must be adapted manualy for it to properly work, will be fixed and updated soon
+        // The number of pixel between each points (50 or 100)
+        private const int POINT_INTERVAL = 60; // <- /!\ Please note that this value must be adapted manualy depending on the screen size for it to properly work
         // The starting displacement value used for the midpoint displacement algorithm
-        private const int DEFAULT_DISPLACE = 40;
+        private const int DEFAULT_DISPLACE = 35;
         // The displacement reduce value used for the midpoint displacement algorithm
         // *If you change this value between 0.4 and 0.9, the field rougthness will variate
-        private const double DISPLACEMENT_REDUCE = 0.4;
+        private const double DISPLACEMENT_REDUCE = 0.6;
         // The moutain value is a interval used to change terrain height variations
         // *Changing the number between 2 and 8 will change the terrain height variations. The lower the number , the more mountains*
-        private const int MOUNTAINS = 6;
+        private const int MOUNTAINS_VARIATION = 4;
 
         // Variables
         private Random _rnd;
@@ -78,8 +80,8 @@ namespace Field_Location_SampleProject
             {
                 if (i % POINT_INTERVAL == 0)
                 {
-                    // Dislace initial point up or down (one on two)
-                    if ((i / POINT_INTERVAL) % MOUNTAINS == 0)
+                    // Displace initial point up or down (one on two)
+                    if ((i / POINT_INTERVAL) % MOUNTAINS_VARIATION == 0)
                     {
                         y = this._rnd.Next(this._screenCenter - (int)displace, this._screenCenter); // The point is place below mid screen
                     }
@@ -93,8 +95,9 @@ namespace Field_Location_SampleProject
                 }
             }
 
-            // Number of repetions of the midpoint displacement algorithm on each segment, each run, the number of points is doubled
-            while ( (this.Locations[1].PosX - this.Locations[0].PosX) != 1)
+            // Repetions of the midpoint displacement algorithm on each segment until there is no more midpoint
+            // Each run, the number of points is doubled
+            while ( (this.Locations[1].PosX - this.Locations[0].PosX) != 0)
             {
                 // Start for last point and finishes at first point (right side of the screen to the left)
                 for (int i = Locations.Count() - 1; i > 0; i--)
@@ -123,21 +126,22 @@ namespace Field_Location_SampleProject
         }
 
         /// <summary>
-        /// 
+        /// Detection if bullet colides with field
         /// </summary>
         /// <param name="bulletX"></param>
         /// <param name="bulletY"></param>
         /// <returns></returns>
-        private bool IsFieldTouched(int bulletX, int bulletY)
+        public bool IsFieldTouched(BG_Location bulletLocation)
         {
-            foreach (BG_Location location in this.Locations)
+            bool isHit = false;
+            foreach (BG_Location fieldLocation in this.Locations)
             {
-                if (bulletX == location.PosX && bulletY < location.PosY)
+                if (bulletLocation.PosX == fieldLocation.PosX && bulletLocation.PosY >= fieldLocation.PosY)
                 {
-                    MessageBox.Show("Bullet has touched");
+                    isHit = true;
                 }
             }
-            return true;
+            return isHit;
         }
 
     }
