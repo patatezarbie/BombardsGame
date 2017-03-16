@@ -17,7 +17,7 @@ namespace NetworkBombards_Player
         public readonly string ServerAddress;
         public readonly int Port;
 
-        private TcpClient _client;
+        private TcpClient _tcpClient;
         public bool Running { get; private set; }
 
         // Buffer & messaging
@@ -29,16 +29,16 @@ namespace NetworkBombards_Player
         #endregion
 
         #region properties
-        public TcpClient Client
+        public TcpClient TcpClient
         {
             get
             {
-                return _client;
+                return _tcpClient;
             }
 
             set
             {
-                _client = value;
+                _tcpClient = value;
             }
         }
 
@@ -60,9 +60,9 @@ namespace NetworkBombards_Player
         public BG_Client(string serverAddress, int port, string name)
         {
             // Create a non-connected TcpClient
-            this.Client = new TcpClient();
-            this.Client.SendBufferSize = this.BufferSize;
-            this.Client.ReceiveBufferSize = this.BufferSize;
+            this.TcpClient = new TcpClient();
+            this.TcpClient.SendBufferSize = this.BufferSize;
+            this.TcpClient.ReceiveBufferSize = this.BufferSize;
             this.Running = false;
 
             // Set the other things
@@ -77,22 +77,22 @@ namespace NetworkBombards_Player
         public void Connect()
         {
             // Try to connect
-            this.Client.Connect(ServerAddress, Port);
-            EndPoint endPoint = Client.Client.RemoteEndPoint;
+            this.TcpClient.Connect(ServerAddress, Port);
+            EndPoint endPoint = TcpClient.Client.RemoteEndPoint;
 
             // Make sure we're connected
-            if (this.Client.Connected)
+            if (this.TcpClient.Connected)
             {
                 // Got in!
                 Console.WriteLine("Connected to the server at {0}.", endPoint);
 
                 // Tell them that we're a player
-                this.MsgStream = Client.GetStream();
+                this.MsgStream = TcpClient.GetStream();
                 byte[] msgBuffer = Encoding.UTF8.GetBytes(String.Format("player:{0}", Name));
                 this.MsgStream.Write(msgBuffer, 0, msgBuffer.Length);   // Blocks
 
                 // If we're still connected after sending our name, that means the server accepts us
-                if (!this.IsDisconnected(this.Client))
+                if (!this.IsDisconnected(this.TcpClient))
                 {
                     this.Running = true;
                     Thread.Sleep(20);
@@ -142,7 +142,7 @@ namespace NetworkBombards_Player
                 Thread.Sleep(10);
 
                 // Check the server didn't disconnect us
-                if (this.IsDisconnected(Client))
+                if (this.IsDisconnected(TcpClient))
                 {
                     this.Running = false;
                     Console.WriteLine("Server has disconnected from us.\n:[");
@@ -183,7 +183,7 @@ namespace NetworkBombards_Player
             Thread.Sleep(20);
 
             // Check that we are still connected to the server
-            if (this.IsDisconnected(this.Client))
+            if (this.IsDisconnected(this.TcpClient))
             {
                 Running = false;
                 this.CleanupNetworkResources();
@@ -200,7 +200,7 @@ namespace NetworkBombards_Player
             while (Running)
             {
                 // Do we have a new message?
-                int messageLength = this.Client.Available;
+                int messageLength = this.TcpClient.Available;
                 if (messageLength > 0)
                 {
                     // Read the whole message
@@ -222,7 +222,7 @@ namespace NetworkBombards_Player
                 Thread.Sleep(10);
 
                 // Check that we are still connected to the server
-                if (this.IsDisconnected(this.Client))
+                if (this.IsDisconnected(this.TcpClient))
                 {
                     Running = false;
                     this.CleanupNetworkResources();
@@ -236,7 +236,7 @@ namespace NetworkBombards_Player
         {
             this.MsgStream.Close();
             this.MsgStream = null;
-            this.Client.Close();
+            this.TcpClient.Close();
         }
 
         // Checks if a socket has disconnected
@@ -251,6 +251,17 @@ namespace NetworkBombards_Player
             {
                 // We got a socket error, assume it's disconnected
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// Disconnect the client when called
+        /// </summary>
+        public void Disconnect()
+        {
+            if (!this.IsDisconnected(this.TcpClient))
+            {
+                this.SendMessages("quit");
             }
         }
         #endregion

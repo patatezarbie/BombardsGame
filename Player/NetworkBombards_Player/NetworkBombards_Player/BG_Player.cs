@@ -8,6 +8,7 @@
  */
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace NetworkBombards_Player
 {
@@ -18,7 +19,9 @@ namespace NetworkBombards_Player
 
         #region Fields
         private BG_Cannon _cannon;
-        // Represent an history an all the player touched as Hit object
+        /// <summary>
+        /// Represent an history an all the player touched as Hit object
+        /// </summary>
         private List<BG_Hit> _history;
         private string _name;
         private bool _isPlaying;
@@ -78,16 +81,6 @@ namespace NetworkBombards_Player
             this.IsPlaying = false;
             this.Cannon = cannon;
         }
-
-        /// <summary>
-        /// Create a Player
-        /// </summary>
-        /// <param name="cannon">Represent the canon of the player</param>
-        public BG_Player(BG_Cannon cannon)
-            : this("noname", cannon)
-        {
-            // No code
-        }
         #endregion
 
         #region Methods
@@ -108,30 +101,6 @@ namespace NetworkBombards_Player
             //this.IsDead = false;
             this.IsPlaying = false;
             this.History.Clear();
-        }
-
-        /// <summary>
-        /// Connect to the server
-        /// </summary>
-        public void Connect()
-        {
-            // Waiting for Server/Client codes...
-        }
-
-        /// <summary>
-        /// Disconnect from the server
-        /// </summary>
-        public void Disconnect()
-        {
-            // Waiting for Server/Client codes...
-        }
-
-        /// <summary>
-        /// At each tick we send info about the player and canon to the server/game master
-        /// </summary>
-        public void Update()
-        {
-            // Waiting for Server/Client codes...
         }
 
         /// <summary>
@@ -167,7 +136,12 @@ namespace NetworkBombards_Player
 
         public void MoveCannon(BG_Location location)
         {
-            this.Cannon.Location = location;
+            this.Cannon.Move(location);
+        }
+
+        public void RotateCannon(float angle)
+        {
+            this.Cannon.AdjustAngle(angle);
         }
         #endregion
     }
