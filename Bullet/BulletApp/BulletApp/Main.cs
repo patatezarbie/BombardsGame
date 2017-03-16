@@ -19,14 +19,17 @@ namespace BulletApp
         {
             foreach (BG_Bullet bullet in bullets)
             {
-                bullet.Draw(e);
+                if (bullet.Visible)
+                {
+                    bullet.Draw(e);
+                }              
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
-            bullets.Add(new BG_Bullet(150, 300, (int)nudAngle.Value, (int)nudVelocity.Value));
+            bullets.Add(new BG_Bullet(250, 300, (int)nudAngle.Value, (int)nudVelocity.Value));
         }
 
         private void timer1_Tick(object sender, EventArgs e)

@@ -59,10 +59,15 @@
             // 
             this.nudAngle.Location = new System.Drawing.Point(104, 51);
             this.nudAngle.Maximum = new decimal(new int[] {
-            360,
+            720,
             0,
             0,
             0});
+            this.nudAngle.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
             this.nudAngle.Name = "nudAngle";
             this.nudAngle.Size = new System.Drawing.Size(54, 20);
             this.nudAngle.TabIndex = 1;
