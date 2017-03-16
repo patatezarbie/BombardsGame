@@ -1,4 +1,5 @@
-﻿/*
+﻿using System;
+/*
  * - Network Bombard Game -
  * V.HAURY & C.DOS REIS
  * 02.03.2017
@@ -6,6 +7,7 @@
  * Player Class
  */
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace NetworkBombards_Player
 {
@@ -63,18 +65,26 @@ namespace NetworkBombards_Player
         #endregion
 
         #region Constructor
-
-        // Designated constructor
-        public BG_Player(string name)
+        /// <summary>
+        /// Create a Player [Designated constructor]
+        /// </summary>
+        /// <param name="name">Name of the player</param>
+        /// <param name="cannon">Represent the canon of the player</param>
+        public BG_Player(string name, BG_Cannon cannon)
         {
             //this.Cannon = new BG_Cannon();
             this.History = new List<BG_Hit>();
             this.Name = name;
             this.IsPlaying = false;
+            this.Cannon = cannon;
         }
 
-        public BG_Player()
-            : this("noname")
+        /// <summary>
+        /// Create a Player
+        /// </summary>
+        /// <param name="cannon">Represent the canon of the player</param>
+        public BG_Player(BG_Cannon cannon)
+            : this("noname", cannon)
         {
             // No code
         }
@@ -127,10 +137,25 @@ namespace NetworkBombards_Player
         /// <summary>
         /// Add an element in the history
         /// </summary>
-        /// <param name="hit"></param>
+        /// <param name="hit">Represent the hit that touched a player</param>
         public void AddHistory(BG_Hit hit)
         {
             this.History.Add(hit);
+        }
+
+        /// <summary>
+        /// Define the cannon movement 
+        /// </summary>
+        /// <param name="str"></param>
+        public void MoveFromString(string input)
+        {
+
+            string regex = "";
+            string[] substrings = Regex.Split(input, regex);
+            foreach (string match in substrings)
+            {
+                Console.WriteLine("'{0}'", match);
+            }
         }
         #endregion
     }
