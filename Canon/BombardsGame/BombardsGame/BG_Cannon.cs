@@ -17,9 +17,9 @@ namespace BombardsGame
         const float DEFAULT_ROTATION = 0.0f;
         const int DEFAULT_BODY_SIZE_X = 50;
         const int DEFAULT_BODY_SIZE_Y = 50;
-        const int DEFAULT_CANNON_SIZE_X = 20;
-        const int DEFAULT_CANNON_SIZE_Y = 50;
-        const int DEFAULT_ANGLE_MAX = 359;
+        const int DEFAULT_CANNON_SIZE_X = 50;
+        const int DEFAULT_CANNON_SIZE_Y = 20;
+        const int DEFAULT_ANGLE_MAX = 360;
         const int DEFAULT_ANGLE_MIN = 0;
         #endregion
 
@@ -98,7 +98,7 @@ namespace BombardsGame
             if (this.Rotation >= DEFAULT_ANGLE_MAX)
             {
                 
-                this.Rotation -= DEFAULT_ANGLE_MAX; //This set the angle to a number lower than 360 
+                this.Rotation -= DEFAULT_ANGLE_MAX; //This set the angle to a number lower than 359 
             }    
             if(this.Rotation < DEFAULT_ANGLE_MIN)
             {
@@ -122,34 +122,36 @@ namespace BombardsGame
         /// <param name="e">Drawing zone</param>
         public void Draw(PaintEventArgs e)
         {
-            e.Graphics.TranslateTransform(Location.PosX, Location.PosY);            
-            e.Graphics.RotateTransform((int)this.Rotation - 90);
+            float ShootAngle = 0;
 
-            RecBody.Location = new Point(0 - this.RecBody.Width /2, 0 - this.RecBody.Height/2);
-
-            e.Graphics.FillRectangle(defaultCannonBrush, this.RecCannon.Location.X - this.RecCannon.Width / 2, this.RecCannon.Y, this.RecCannon.Width, this.RecCannon.Height);
-
-            e.Graphics.FillEllipse(BobyBrush, this.RecBody);           
-
-            //This represent the center of the rotation. Use this in case of test.
-            //e.Graphics.FillEllipse(Brushes.Red, -5, -5, 10, 10);
-            //e.Graphics.RotateTransform(-(int)(this.Rotation - 90));
-            e.Graphics.RotateTransform(this.Rotation);
+            //BULLET
+            e.Graphics.TranslateTransform(Location.PosX, Location.PosY);
             if (PermissionToFire)
             {
-                
-                Bullet = new BG_Bullet(RecCannon.Location.X - RecCannon.Width / 4, RecCannon.Location.Y + RecCannon.Height, (int)this.Rotation, 50);
+                //Calcule the angle to have the cannon look up when it's a 90°
+                ShootAngle = this.Rotation + DEFAULT_ANGLE_MAX;
+                ShootAngle = ShootAngle - (ShootAngle - (DEFAULT_ANGLE_MAX - this.Rotation));
+
+                Bullet = new BG_Bullet(RecCannon.Location.X, RecCannon.Location.Y - 5, (int)ShootAngle, 99);
 
                 Bullet.Draw(e);
                 PermissionToFire = false;
-            }            
+            }
 
             if (Bullet != null)
             {
                 Bullet.Draw(e);
             }
+           
+            //CANNON
+            e.Graphics.RotateTransform((int)this.Rotation);
 
-            e.Graphics.ResetTransform();
+            RecBody.Location = new Point(0 - this.RecBody.Width /2, 0 - this.RecBody.Height/2);
+            e.Graphics.FillRectangle(defaultCannonBrush, this.RecCannon.Location.X, this.RecCannon.Y - this.RecCannon.Height / 2 , this.RecCannon.Width, this.RecCannon.Height);
+            e.Graphics.FillEllipse(BobyBrush, this.RecBody);           
+
+            //This represent the center of the rotation. Use this in case of test.
+            e.Graphics.FillEllipse(Brushes.Blue, -5, -5, 10, 10);                
         }
         #endregion
 

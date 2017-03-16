@@ -44,8 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BG_Cannon.cs" />
     <Compile Include="BG_Bullet.cs" />
+    <Compile Include="BG_Cannon.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

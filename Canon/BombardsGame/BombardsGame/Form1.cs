@@ -33,11 +33,11 @@ namespace BombardsGame
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    c1.AdjustAngle(-1f);
+                    c1.AdjustAngle(-5f);
                     break;
 
                 case Keys.S:
-                    c1.AdjustAngle(1f);
+                    c1.AdjustAngle(5f);
                     break;
                 case Keys.Space:
                     c1.Shoot();
