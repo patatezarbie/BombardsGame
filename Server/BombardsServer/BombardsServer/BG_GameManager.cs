@@ -10,6 +10,7 @@ namespace BombardsServer
     public class BG_GameManager
     {
         #region fields
+        private const int FINAL_ROUND = 10;
         private const int PLAYER_CAP = 2;
         private const int SLEEP_TIME = 20; // Used to avoid server interpreting two messages as one
         private const string SEPARATOR = ";";
@@ -184,7 +185,7 @@ namespace BombardsServer
                         this.Server.SendMessages();
 
                         // If we reach the final turn, we end the game
-                        if (false)
+                        if (TotalRounds == FINAL_ROUND)
                         {
                             this.State = ServerState.GameEnd;
                         }
@@ -192,8 +193,11 @@ namespace BombardsServer
                         // If we didn't switch state, go back to another player's turn
                         break;
                     case ServerState.GameEnd:
-                        break;
-                    default:
+                        // Send messages for the end of the game
+                        // TODO:
+
+                        // Start another game
+                        this.State = ServerState.InitializeRound;
                         break;
                 }
 
