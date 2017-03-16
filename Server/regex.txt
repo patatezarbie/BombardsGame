@@ -1,4 +1,5 @@
 GET PLAYER NAME + POSITIONS
+<<<<<<< HEAD
 \([^,;.]+;[0-9]{0,3};[0-9]{0,3}\)
 
 GET PLAYER NAME + ROTATION + COLOR NAME + POSITIONS + SCORE
@@ -18,3 +19,6 @@ string colorName = randomColorName.ToString();
 Color useTheColor = Color.FromName(colorName);
 
 
+=======
+\(([^,;.]+);([0-9]{1,3});([0-9]{1,3})\)
+>>>>>>> origin/master
