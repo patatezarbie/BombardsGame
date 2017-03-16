@@ -1,6 +1,6 @@
 ﻿namespace BulletApp
 {
-    partial class Main
+    partial class Form1
     {
         /// <summary>
         /// Variable nécessaire au concepteur.

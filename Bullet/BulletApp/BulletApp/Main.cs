@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace BulletApp
 {
-    public partial class Main : Form
+    public partial class Form1 : Form
     {
         List<BG_Bullet> bullets = new List<BG_Bullet>();
 
-        public Main()
+        public Form1()
         {
             InitializeComponent();
             DoubleBuffered = true;
@@ -32,7 +32,7 @@ namespace BulletApp
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
-            bullets.Add(new BG_Bullet(150, 300, (int)nudAngle.Value, 40));
+            bullets.Add(new BG_Bullet(150, 300, (int)nudAngle.Value, (int)nudVelocity.Value));
         }
 
         private void timer1_Tick(object sender, EventArgs e)
