@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* *
+ * Project     : BombardsGame
+ * Description : Add two method to the RichTextBox that allow to change the color of each
+ *               line individually and print the scoreboard.
+ * Authors     : De Biasi Loris, Devaud Alan
+ * Date        : 17.03.2017
+ * Version     : 1.0
+ * */
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
