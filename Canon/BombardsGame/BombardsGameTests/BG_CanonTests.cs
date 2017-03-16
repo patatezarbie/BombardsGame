@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BombardsGame;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Drawing;
+
 namespace BombardsGame.Tests
 {
     [TestClass()]
@@ -14,25 +15,35 @@ namespace BombardsGame.Tests
         [TestMethod()]
         public void MoveTest()
         {
-;
+            BG_Cannon c1 = new BG_Cannon(5.0f, Color.Black, new BG_Location(0,0));
+            int targetValueX = 50;
+            int targetValueY = 100;
+            c1.Move(new BG_Location(targetValueX, targetValueY));
+
+            Assert.AreEqual(c1.Location.PosX, targetValueX);
+            Assert.AreEqual(c1.Location.PosY, targetValueY);
+            
         }
 
         [TestMethod()]
         public void ajustAngleTest()
         {
-            Assert.Fail();
-        }
+            BG_Cannon c1 = new BG_Cannon(0.0f, Color.Black, new BG_Location(0, 0));
 
-        [TestMethod()]
-        public void shootTest()
-        {
-            Assert.Fail();
-        }
+            Assert.AreEqual(c1.Rotation, 0.0f);
 
-        [TestMethod()]
-        public void drawTest()
-        {
-            Assert.Fail();
-        }
+            c1.ajustAngle(5.0f);
+
+            Assert.AreEqual(c1.Rotation, 5.0f);
+
+            // 5 + 360 = 365
+            c1.ajustAngle(360.0f);
+
+            Assert.AreEqual(c1.Rotation, 5.0f);
+
+            c1.ajustAngle(-10.0f);
+
+            Assert.AreEqual(c1.Rotation, 355.0f);
+        }        
     }
 }

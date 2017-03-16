@@ -12,26 +12,20 @@ namespace BombardsGame
 {
     public partial class Form1 : Form
     {
-        BG_Canon c1;
-        BG_Canon c2;
+        BG_Cannon c1;
         bool allowShot;
 
         public Form1()
         {
             InitializeComponent();
-            c1 = new BG_Canon(Color.OrangeRed, new Point(0,0));
-            c2 = new BG_Canon(Color.Blue, new Point(100,100));
+            c1 = new BG_Cannon(Color.OrangeRed, new BG_Location(0,0));
             allowShot = false;
-            Invalidate();
-
-            
-            Invalidate();
+            this.DoubleBuffered = true;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            c1.draw(e);
-            c2.draw(e);  
+            c1.Draw(e); 
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -39,22 +33,30 @@ namespace BombardsGame
             switch (e.KeyCode)
             {
                 case Keys.D:
-                    c1.ajustAngle(2.5f);
+                    c1.AdjustAngle(2.5f);
                     break;
 
                 case Keys.A:
-                    c1.ajustAngle(-2.5f);
+                    c1.AdjustAngle(-2.5f);
                     break;
                 case Keys.Space:
-                    c1.shoot();
+                    c1.Shoot();
                     break;
                 case Keys.M:
-                    c1.Move(new Point(300, 300));
+                    c1.Move(new BG_Location(300, 300));
                     break;
-
             }
+        }
 
+        private void animator_Tick(object sender, EventArgs e)
+        {
             Invalidate();
+            label1.Text = "Location cannon Red: X : " + c1.Location.PosX + " Y : " + c1.Location.PosY;
+            if (c1.Bullet != null)
+            {
+                label2.Text = "Location bullet X : " + c1.Bullet._x + " Y : " + c1.Bullet._y;
+            }
+            
         }
 
 
