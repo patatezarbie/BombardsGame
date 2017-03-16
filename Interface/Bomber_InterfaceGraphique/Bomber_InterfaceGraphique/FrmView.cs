@@ -17,8 +17,9 @@ namespace Bomber_InterfaceGraphique
         #region Properties
         List<Player> playerlist = new List<Player>();
         public BG_PowerBar PowerBar { get; set; }
-        public Timer Watch { get; set; }
+        public System.Windows.Forms.Timer Watch { get; set; }
         public bool SpacePressed { get; set; }
+        const int port = 8000;
         #endregion
 
         public FrmView()
@@ -83,7 +84,7 @@ namespace Bomber_InterfaceGraphique
             JoinGame join = new JoinGame();
             if (join.ShowDialog(this) == DialogResult.OK)
             {
-                MessageBox.Show("En cours");
+                MessageBox.Show( join.Pseudo + "," + join.IPServer);
             }
         }
 

@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BG_Client.cs" />
     <Compile Include="BG_PowerBar.cs" />
     <Compile Include="BG_PowerBarBackground.cs" />
     <Compile Include="BG_PowerBarProgress.cs" />

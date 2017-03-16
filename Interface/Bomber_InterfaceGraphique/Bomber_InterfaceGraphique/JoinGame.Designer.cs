@@ -79,6 +79,7 @@
             this.btnJoinGame.TabIndex = 4;
             this.btnJoinGame.Text = "Rejoindre";
             this.btnJoinGame.UseVisualStyleBackColor = true;
+            this.btnJoinGame.Click += new System.EventHandler(this.btnJoinGame_Click);
             // 
             // JoinGame
             // 
@@ -95,6 +96,7 @@
             this.Name = "JoinGame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rejoindre une partie";
+            this.Load += new System.EventHandler(this.JoinGame_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
