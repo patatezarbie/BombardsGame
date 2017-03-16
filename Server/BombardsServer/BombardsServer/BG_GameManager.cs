@@ -22,7 +22,7 @@ namespace BombardsServer
         private string _roomName;
         private int _terrainSeed;
         private int _port;
-        
+
 
         private BG_Server _server;
         #endregion

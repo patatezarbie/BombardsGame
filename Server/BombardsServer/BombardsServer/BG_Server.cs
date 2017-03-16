@@ -128,7 +128,9 @@ namespace BombardsServer
                 // Do the rest
                 this.CheckForDisconnects();
                 this.CheckForNewMessages();
-                Thread.Sleep(250);
+
+                // Wait before sending and clearing messages
+                Thread.Sleep(200);
                 this.SendMessages();
 
                 // Update only every 10ms
