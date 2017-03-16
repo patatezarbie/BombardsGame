@@ -3,7 +3,7 @@
  * Date   : 16.03.17
  * Version : 2.0
  * Description : Create a bullet and display position of it.
- */ 
+ */
 
 
 using System;
@@ -20,19 +20,19 @@ namespace BulletApp
         const int RADIUS = 10; //px
         const int DISPLAY_TIME = 250; //ms
         const int LIFE_TIME = 9000; //ms
-        const int MAX_VELOCITY = 100;
+        const int MAX_VELOCITY = 1000;
         #endregion
-        
+
         #region fields
         //actual postionts of bullet
         private int _x, _y;
         //initial position of bullet
-        private int _xInit, _yInit;  
+        private int _xInit, _yInit;
         //angle of shoot
         private int _angle;
         //bullet's velocity
         private int _velocity;
-        private Stopwatch _stp;            
+        private Stopwatch _stp;
         #endregion
 
         #region Properties
@@ -40,6 +40,16 @@ namespace BulletApp
         {
             get { return _stp.ElapsedMilliseconds < LIFE_TIME; }
         }
+
+        /// <summary>
+        /// Position of the bullet
+        /// </summary>
+        public Point Position { get { return new Point(this._x, this._y); } }
+        
+        /// <summary>
+        /// Radius of the bullet
+        /// </summary>
+        public int Radius { get { return RADIUS; } }
         #endregion
 
         #region construcotrs
@@ -52,13 +62,13 @@ namespace BulletApp
         /// <param name="velocity">velocity of the bullet</param>
         public BG_Bullet(int x, int y, int angle, int velocity)
         {
-           
+
             this._x = this._xInit = x;
-            this._y = this._yInit = y;            
-            this._angle = angle;            
-            this._velocity = velocity % MAX_VELOCITY;
+            this._y = this._yInit = y;
+            this._angle = angle;
+            this._velocity = (velocity <= MAX_VELOCITY)?velocity:MAX_VELOCITY;
             _stp = new Stopwatch();
-            _stp.Start();         
+            _stp.Start();
         }
         #endregion
 
@@ -76,13 +86,13 @@ namespace BulletApp
                 //transfome angle form degres to radians
                 double angle_rad = this._angle * Math.PI / 180;
 
-            Console.WriteLine(angle_rad);
+                Console.WriteLine(angle_rad);
                 // time of the MRUA of the bullet
                 double t = (double)_stp.ElapsedMilliseconds / DISPLAY_TIME;
 
                 // http://www.sem-experimentation.ch/~math/spip.php?article415
                 // MRU
-            _x = _xInit + Convert.ToInt32(Convert.ToDouble(_velocity) * Math.Cos(angle_rad) * t);
+                _x = _xInit + Convert.ToInt32(Convert.ToDouble(_velocity) * Math.Cos(angle_rad) * t);
                 // MRUA - 0.5 is the 1/2 for MRUA formule
                 _y = _yInit - Convert.ToInt32(Convert.ToDouble(_velocity) * Math.Sin(angle_rad) * t + 0.5d * -GRAVITY * Math.Pow(t, 2));
 

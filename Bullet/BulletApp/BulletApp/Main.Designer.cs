@@ -93,6 +93,11 @@
             // nudVelocity
             // 
             this.nudVelocity.Location = new System.Drawing.Point(104, 77);
+            this.nudVelocity.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nudVelocity.Minimum = new decimal(new int[] {
             10,
             0,
