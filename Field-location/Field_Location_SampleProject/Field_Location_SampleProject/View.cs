@@ -59,11 +59,7 @@ namespace Field_Location_SampleProject
             int y = rnd.Next(0, panelDraw.Height);
 
             //Draw field points
-            foreach (var l in field.Locations)
-            {
-                g.FillEllipse(b2, l.PosX, l.PosY, fieldSize, fieldSize);
-                g.FillEllipse(b, l.PosX, l.PosY, fieldSize * 2, fieldSize * 2);
-            }
+            field.Draw(e);
 
             g.FillEllipse(new SolidBrush(Color.Black), x - 3f, y - 3f, 6f, 6f);
 

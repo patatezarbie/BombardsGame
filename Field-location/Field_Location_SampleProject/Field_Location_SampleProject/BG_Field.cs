@@ -10,6 +10,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace Field_Location_SampleProject
         // The moutain value is a interval used to change terrain height variations
         // *Changing the number between 2 and 8 will change the terrain height variations. The lower the number , the more mountains*
         private const int MOUNTAINS_VARIATION = 4;
+
+        private const float FIELD_SIZE = 2.2f;
 
         // Variables
         private Random _rnd;
@@ -123,6 +126,20 @@ namespace Field_Location_SampleProject
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Draw field points
+        /// </summary>
+        /// <param name="e"></param>
+        public void Draw(PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            foreach (var l in this.Locations)
+            {
+                g.FillEllipse(new SolidBrush(Color.DarkGreen), l.PosX, l.PosY, FIELD_SIZE * 2, FIELD_SIZE * 2);
+                g.FillEllipse(new SolidBrush(Color.Green), l.PosX, l.PosY, FIELD_SIZE, FIELD_SIZE);
+            }
         }
 
         /// <summary>
