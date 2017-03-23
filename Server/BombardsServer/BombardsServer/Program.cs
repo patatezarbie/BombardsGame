@@ -21,7 +21,7 @@ namespace BombardsServer
             // Create the game manager
             string name = "Bombards CFPT";
             int port = 8000;
-            bombardsGame = new BG_GameManager(name, port, 42);
+            bombardsGame = new BG_GameManager(name, port, new Random().Next(100));
 
             // Add a handler for a Ctrl-C press
             Console.CancelKeyPress += InterruptHandler;

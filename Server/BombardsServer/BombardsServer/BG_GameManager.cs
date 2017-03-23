@@ -12,7 +12,7 @@ namespace BombardsServer
         #region fields
         private const int FINAL_ROUND = 10;
         private const int PLAYER_CAP = 2;
-        private const int SLEEP_TIME = 20; // Used to avoid server interpreting two messages as one
+        private const int SLEEP_TIME = 50; // Used to avoid server interpreting two messages as one
         private const string SEPARATOR = ";";
         private enum ServerState { StartServer, InitializeRound, PlayerTurn, GameEnd };
 
@@ -222,7 +222,7 @@ namespace BombardsServer
         private void InitializeGame()
         {
             // Send the seed to generate terrain
-            this.Server.MessageQueue.Enqueue("seed: " + this.TerrainSeed);
+            this.Server.MessageQueue.Enqueue("seed:" + this.TerrainSeed);
             Thread.Sleep(SLEEP_TIME);
 
         }
@@ -259,8 +259,8 @@ namespace BombardsServer
 
             foreach (var player in this.Server.Names)
             {
-                int x = rnd.Next(0, 100); // TO CHANGE ACCORDING TO BOARD SIZE
-                int y = rnd.Next(0, 100); // TO CHANGE ACCORDING TO BOARD SIZE
+                int x = rnd.Next(100, 300); // TO CHANGE ACCORDING TO BOARD SIZE
+                int y = rnd.Next(100, 300); // TO CHANGE ACCORDING TO BOARD SIZE
 
                 // format the string
                 // (player1;x;y)(player2;x;y) etc..

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BombardsClient
+namespace Bomber_InterfaceGraphique
 {
     class BG_Client
     {

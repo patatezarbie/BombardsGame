@@ -18,6 +18,8 @@ namespace Bomber_InterfaceGraphique
         public string IPServer { get; set; }
         public Regex Regexp { get; set; }
 
+
+
         public JoinGame()
         {
             InitializeComponent();

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,6 +28,12 @@ namespace Bomber_InterfaceGraphique
 
         // Personal data
         public readonly string Name;
+
+        public List<BG_Player> listPlayers;
+        public BG_Field field;
+
+        // QUICK AND DIRTY WARNING !!!!!
+        FrmView MainForm;
         #endregion
 
         #region properties
@@ -57,7 +65,7 @@ namespace Bomber_InterfaceGraphique
         #endregion
 
         #region constructors
-        public BG_Client(string serverAddress, int port, string name)
+        public BG_Client(string serverAddress, int port, string name, FrmView view)
         {
             // Create a non-connected TcpClient
             this.TcpClient = new TcpClient();
@@ -69,6 +77,10 @@ namespace Bomber_InterfaceGraphique
             this.ServerAddress = serverAddress;
             this.Port = port;
             this.Name = name;
+            this.MainForm = view;
+
+            this.listPlayers = new List<BG_Player>();
+            this.field = new BG_Field(MainForm.Width, MainForm.Height, 0);
         }
         #endregion
 
@@ -212,6 +224,9 @@ namespace Bomber_InterfaceGraphique
                     // Check that we don't recieve our own messages
                     string nameFromMsg = msg.Split(':')[0];
 
+                    // Update the client's values depending on the message
+                    this.UpdateValues(msg);
+
                     if (nameFromMsg != this.Name)
                     {
                         Console.WriteLine(Environment.NewLine + msg);
@@ -264,6 +279,66 @@ namespace Bomber_InterfaceGraphique
                 this.SendMessages("quit");
             }
         }
+
+        public void UpdateValues(string msg)
+        {
+            // Check for seed
+            string SeedRegex = "seed:([0-9]{1,})";
+            Match seedMatch = Regex.Match(msg, SeedRegex);
+
+            // Check if we have a seed
+            if (seedMatch.Value != String.Empty)
+            {
+                int levelSeed = int.Parse(seedMatch.Groups[1].Value);
+                this.field = new BG_Field(MainForm.Width - 180, MainForm.Height - 24, levelSeed);
+            }
+
+
+            // Check for moving players
+            string MoveRegex = "\\(([^,;.]+);([0-9]{1,3});([0-9]{1,3})\\)";
+            MatchCollection moveMatches = Regex.Matches(msg, MoveRegex);
+
+            foreach (Match match in moveMatches)
+            {
+                string[] MoveValues = Regex.Split(match.Value, MoveRegex);
+
+                string name = MoveValues[1];
+                int x = int.Parse(MoveValues[2]);
+                int y = int.Parse(MoveValues[3]);
+
+                BG_Cannon currentPlayerCannon = new BG_Cannon(Color.Red, new BG_Location(x, y));
+                BG_Player currentPlayer = new BG_Player(name, currentPlayerCannon);
+
+                this.listPlayers.Add(currentPlayer);
+            }
+
+
+            // Check for new turn
+            string newTurnRegex = "[^,.-]{1,};newturn";
+            Match newTurnMatch = Regex.Match(msg, newTurnRegex);
+
+            // Check if we have to start a new turn
+            if (newTurnMatch.Value == (this.Name + ";" + "newturn"))
+            {
+                // Start the turn
+                
+            }
+
+
+            // Check for end turn
+            string testStr = "endturn";
+            string endTurnRegex = "^endturn$";
+            Match endTurnMatch = Regex.Match(testStr, endTurnRegex);
+
+            // Check if we have to start a new turn
+            if (endTurnMatch.Value == "endturn")
+            {
+                // End the turn
+
+            }
+            
+        }
+
         #endregion
     }
 }

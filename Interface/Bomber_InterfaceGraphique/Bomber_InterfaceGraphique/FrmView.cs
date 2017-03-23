@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Bomber_InterfaceGraphique
@@ -19,7 +20,9 @@ namespace Bomber_InterfaceGraphique
         public BG_PowerBar PowerBar { get; set; }
         public System.Windows.Forms.Timer Watch { get; set; }
         public bool SpacePressed { get; set; }
-        const int port = 8000;
+        const int SRV_PORT = 8000;
+        public bool IsConnected { get; set; }
+        BG_Client client;
         #endregion
 
         public FrmView()
@@ -39,12 +42,13 @@ namespace Bomber_InterfaceGraphique
             playerlist.Add(new Player("wdwdw"));
             playerlist.Add(new Player("ghhhhh"));*/
 
-            this.Watch = new Timer();
+            this.Watch = new System.Windows.Forms.Timer();
             this.Watch.Interval = 1;
             this.Watch.Tick += Watch_Tick;
-            this.Watch.Start();
+            //this.Watch.Start();
 
             this.SpacePressed = false;
+            this.IsConnected = false;
         }
 
         /// <summary>
@@ -63,6 +67,8 @@ namespace Bomber_InterfaceGraphique
                 this.PowerBar.StartProgress();
             else if (!this.SpacePressed)
                 this.PowerBar.StopProgress();
+
+
 
         }
 
@@ -84,16 +90,37 @@ namespace Bomber_InterfaceGraphique
             JoinGame join = new JoinGame();
             if (join.ShowDialog(this) == DialogResult.OK)
             {
-                MessageBox.Show( join.Pseudo + "," + join.IPServer);
+                this.client = new BG_Client(join.IPServer, SRV_PORT, join.Pseudo, this);
+                client.Connect();
+
+                // Start the thread for checking messages
+                Thread thread = new Thread(new ThreadStart(client.CheckForNewMessages));
+                thread.Start();
+
+                this.IsConnected = true;
+                this.Watch.Start();
             }
         }
 
         private void FrmView_Paint(object sender, PaintEventArgs e)
         {
             // Draw the status
-            DrawConnectionStatus(e.Graphics, false);
+            //DrawConnectionStatus(e.Graphics, false);
+            this.DrawConnexionState(e.Graphics);
 
             this.PowerBar.Draw(e); // Draw the power bar
+
+            if (this.IsConnected)
+            {
+                // Draw the field
+                this.client.field.Draw(e);
+
+                // Draw the players
+                foreach (var player in this.client.listPlayers)
+                {
+                    player.Cannon.Draw(e);
+                }
+            }
         }
 
         /// <summary>
@@ -107,14 +134,22 @@ namespace Bomber_InterfaceGraphique
         {
             Rectangle rect = new Rectangle(10, 30, 20, 20);
 
-            if (isConnected == true)
+            this.IsConnected = isConnected;
+
+            /*if (isConnected == true)
             {
                 g.FillRectangle(Brushes.Green, rect);
             }
             else
             {
                 g.FillRectangle(Brushes.Red, rect);
-            }
+            }*/
+        }
+
+        private void DrawConnexionState(Graphics g)
+        {
+            Rectangle rect = new Rectangle(10, 30, 20, 20);
+            g.FillRectangle((this.IsConnected) ? Brushes.Green : Brushes.Red, rect);
         }
 
         // Disable or enable the menu option
@@ -138,7 +173,7 @@ namespace Bomber_InterfaceGraphique
             {
                 this.SpacePressed = true;
             }
-                
+
         }
 
         private void FrmView_KeyUp(object sender, KeyEventArgs e)
